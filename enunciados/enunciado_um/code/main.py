@@ -6,14 +6,15 @@ from datetime import datetime, timezone
 from pathlib import Path
 from statistics import median
 from typing import Any
+from collections import Counter
 
 from dotenv import load_dotenv
-
 from github_gql import graphql_request
 
 ENV_PATH = Path(__file__).resolve().parent / ".env"
 load_dotenv(dotenv_path=ENV_PATH, override=False)
 
+# Query atualizada para incluir RQ04 e RQ05
 QUERY_TOP100_BASIC = """
 query($q: String!, $n: Int!) {
   rateLimit { cost remaining resetAt }
@@ -25,7 +26,9 @@ query($q: String!, $n: Int!) {
         nameWithOwner
         url
         createdAt
+        updatedAt
         stargazerCount
+        primaryLanguage { name }
       }
     }
   }
@@ -45,123 +48,133 @@ def get_top_repos_basic(n: int = 100) -> list[dict[str, Any]]:
                 "url": r["url"],
                 "stars": int(r["stargazerCount"]),
                 "created_at": datetime.fromisoformat(r["createdAt"].replace("Z", "+00:00")),
+                "updated_at": datetime.fromisoformat(r["updatedAt"].replace("Z", "+00:00")),
+                "language": r["primaryLanguage"]["name"] if r["primaryLanguage"] else "Unknown",
             }
         )
     return repos
 
 def build_metrics_query(batch: list[dict[str, Any]]) -> str:
-    # Monta uma query com aliases: r0, r1, r2...
     parts = ["query {", "rateLimit { cost remaining resetAt }"]
     for i, repo in enumerate(batch):
         owner = repo["owner"].replace('"', '\\"')
         name = repo["name"].replace('"', '\\"')
+        # Adicionado total de issues e issues fechadas para RQ06
         parts.append(
             f'''
             r{i}: repository(owner: "{owner}", name: "{name}") {{
               pullRequests(states: MERGED) {{ totalCount }}
               releases {{ totalCount }}
+              all_issues: issues {{ totalCount }}
+              closed_issues: issues(states: CLOSED) {{ totalCount }}
             }}
             '''
         )
     parts.append("}")
     return "\n".join(parts)
 
-def fetch_metrics_batch(batch: list[dict[str, Any]]) -> dict[str, dict[str, int]]:
+def fetch_metrics_batch(batch: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     query = build_metrics_query(batch)
     result = graphql_request(query, None)
     data = result["data"]
 
-    metrics: dict[str, dict[str, int]] = {}
+    metrics: dict[str, dict[str, Any]] = {}
     for i, repo in enumerate(batch):
         alias = f"r{i}"
         node = data.get(alias)
         key = repo["full_name"]
 
         if node is None:
-            metrics[key] = {"merged_prs_total": 0, "releases_total": 0}
+            metrics[key] = {"merged_prs": 0, "releases": 0, "total_issues": 0, "closed_issues": 0}
             continue
 
         metrics[key] = {
-            "merged_prs_total": int(node["pullRequests"]["totalCount"]),
-            "releases_total": int(node["releases"]["totalCount"]),
+            "merged_prs": int(node["pullRequests"]["totalCount"]),
+            "releases": int(node["releases"]["totalCount"]),
+            "total_issues": int(node["all_issues"]["totalCount"]),
+            "closed_issues": int(node["closed_issues"]["totalCount"]),
         }
     return metrics
 
-def age_in_days(created_at: datetime, now: datetime) -> int:
-    delta = now - created_at
-    return max(0, int(delta.total_seconds() // 86400))
-
-def fetch_metrics_with_retry(batch: list[dict[str, Any]], max_attempts: int = 3) -> dict[str, dict[str, int]]:
-    """Busca métricas com retry automático em caso de falha parcial."""
+def fetch_metrics_with_retry(batch: list[dict[str, Any]], max_attempts: int = 3) -> dict[str, dict[str, Any]]:
     for attempt in range(max_attempts):
         try:
             return fetch_metrics_batch(batch)
-        except Exception as e:
+        except Exception:
             if attempt == max_attempts - 1:
-                print(f"⚠️  Falha após {max_attempts} tentativas no batch. Retornando zeros.")
-                return {r["full_name"]: {"merged_prs_total": 0, "releases_total": 0} for r in batch}
-            wait_time = 2 ** attempt
-            print(f"  ⚠️  Retry em {wait_time}s... (tentativa {attempt + 1}/{max_attempts})")
-            time.sleep(wait_time)
+                return {r["full_name"]: {"merged_prs": 0, "releases": 0, "total_issues": 0, "closed_issues": 0} for r in batch}
+            time.sleep(2 ** attempt)
 
 def main() -> None:
     if not os.getenv("GITHUB_TOKEN"):
         raise RuntimeError(f"GITHUB_TOKEN não carregou. Confere o .env em: {ENV_PATH}")
 
-    # Entrada do usuário
     try:
         num_repos = int(input("Quantos repositórios deseja buscar? (padrão: 100): ") or "100")
     except ValueError:
         num_repos = 100
 
-    num_repos = max(1, min(num_repos, 1000))  # Limita entre 1 e 1000
-    print(f"\n📊 Buscando {num_repos} repositórios...")
+    num_repos = max(1, min(num_repos, 1000))
+    print(f"\n📊 Analisando {num_repos} repositórios...")
 
     repos = get_top_repos_basic(num_repos)
-    print(f"✅ {len(repos)} repositórios encontrados\n")
-
-    # Batches adaptáveis: quanto maior o número de repos, batches maiores
-    # Evita timeout com query muito grande (máx 4 repos por batch para segurança)
-    batch_size = min(4, max(1, 10 - (num_repos // 200)))
-    all_metrics: dict[str, dict[str, int]] = {}
-
+    
+    # Coleta de métricas em batches
+    batch_size = 4
+    all_metrics = {}
     total_batches = (len(repos) + batch_size - 1) // batch_size
 
     for i in range(0, len(repos), batch_size):
         batch = repos[i : i + batch_size]
-        batch_num = i // batch_size + 1
-        print(f"[{batch_num}/{total_batches}] Buscando métricas ({len(batch)} repos)... ", end="", flush=True)
+        print(f"[{i//batch_size + 1}/{total_batches}] Coletando métricas detalhadas... ", end="", flush=True)
         m = fetch_metrics_with_retry(batch)
         all_metrics.update(m)
         print("✅")
-
-        # Rate limit awareness: pequena pausa entre batches
-        if batch_num < total_batches:
-            time.sleep(0.5)
-
-    # Junta no objeto final
-    for r in repos:
-        m = all_metrics.get(r["full_name"], {"merged_prs_total": 0, "releases_total": 0})
-        r["merged_prs_total"] = m["merged_prs_total"]
-        r["releases_total"] = m["releases_total"]
+        time.sleep(0.5)
 
     now = datetime.now(timezone.utc)
+    
+    # Listas para cálculos
+    ages = []
+    merged_prs = []
+    releases = []
+    update_intervals = []
+    languages = []
+    issue_ratios = []
 
-    # RQ01: idade (dias) desde criação
-    ages_days = [age_in_days(r["created_at"], now) for r in repos]
-    # RQ02: merged PRs
-    merged_prs = [r["merged_prs_total"] for r in repos]
-    # RQ03: releases
-    releases = [r["releases_total"] for r in repos]
+    for r in repos:
+        m = all_metrics.get(r["full_name"], {"merged_prs": 0, "releases": 0, "total_issues": 0, "closed_issues": 0})
+        
+        # RQ01
+        ages.append((now - r["created_at"]).days)
+        # RQ02 e RQ03
+        merged_prs.append(m["merged_prs"])
+        releases.append(m["releases"])
+        # RQ04: Tempo desde a última atualização (em dias)
+        update_intervals.append(max(0, (now - r["updated_at"]).days))
+        # RQ05: Linguagens
+        languages.append(r["language"])
+        # RQ06: Razão de issues fechadas
+        if m["total_issues"] > 0:
+            issue_ratios.append(m["closed_issues"] / m["total_issues"])
+        else:
+            issue_ratios.append(0.0)
 
-    print(f"\n=== Resultados (Top {num_repos}) ===")
-    print(f"RQ01 mediana idade: {median(ages_days)} dias e {median(ages_days) // 365} anos")
-    print(f"RQ02 mediana PRs aceitas (MERGED): {int(median(merged_prs))}")
-    print(f"RQ03 mediana releases: {int(median(releases))}")
+    print("\n" + "="*40)
+    print("       RELATÓRIO FINAL DE MINERAÇÃO")
+    print("="*40)
+    
+    print(f"RQ01. Mediana Idade: {median(ages):.0f} dias")
+    print(f"RQ02. Mediana PRs Merged: {median(merged_prs):.0f}")
+    print(f"RQ03. Mediana Releases: {median(releases):.0f}")
+    print(f"RQ04. Mediana dias desde a última atualização: {median(update_intervals):.0f} dias")
 
-    print("\nAmostra (5 primeiros):")
-    for r in repos[:5]:
-        print(f"- {r['full_name']} | mergedPRs={r['merged_prs_total']} | releases={r['releases_total']}")
+    lang_counts = Counter(languages).most_common(5)
+    print(f"RQ05. Top 5 Linguagens: {', '.join([f'{l}: {c}' for l, c in lang_counts])}")
+    
+    avg_issue_ratio = (sum(issue_ratios) / len(issue_ratios)) * 100
+    print(f"RQ06. Percentual médio de Issues Fechadas: {avg_issue_ratio:.2f}%")
+    print("="*40)
 
 if __name__ == "__main__":
     main()
