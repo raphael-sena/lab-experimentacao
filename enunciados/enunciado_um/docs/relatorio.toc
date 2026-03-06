@@ -1,0 +1,18 @@
+\babel@toc {brazilian}{}\relax 
+\contentsline {section}{\numberline {1}Introdução}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Hipóteses Informais}{2}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Metodologia}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Coleta de Dados}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Análise}{3}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Questões de Pesquisa e Resultados}{3}{section.3}%
+\contentsline {subsection}{\numberline {3.1}RQ01 -- Sistemas populares são maduros/antigos?}{3}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}RQ02 -- Sistemas populares recebem muita contribuição externa?}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}RQ03 -- Sistemas populares lançam releases com frequência?}{5}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}RQ04 -- Sistemas populares são atualizados com frequência?}{5}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}RQ05 -- Sistemas populares são escritos nas linguagens mais populares?}{6}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}RQ06 -- Sistemas populares possuem alto percentual de issues fechadas?}{7}{subsection.3.6}%
+\contentsline {section}{\numberline {4}RQ07 (Bônus) -- Linguagem e Contribuição Externa, Releases e Atualização}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}RQ07a -- PRs aceitas por linguagem}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}RQ07b -- Releases por linguagem}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}RQ07c -- Tempo desde última atualização por linguagem}{9}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Conclusão}{10}{section.5}%
