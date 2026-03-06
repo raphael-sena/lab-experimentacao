@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import csv
 import os
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -189,7 +190,42 @@ def main() -> None:
         print("✅")
         time.sleep(0.5)
 
-    print(f"\n✅ {len(repos)} repositórios coletados com sucesso.")
+    now = datetime.now(timezone.utc)
+    csv_rows: list[dict[str, Any]] = []
+
+    for r in repos:
+        m = all_metrics.get(
+            r["full_name"],
+            {"merged_prs": 0, "releases": 0, "total_issues": 0, "closed_issues": 0},
+        )
+        total = m["total_issues"]
+        closed = m["closed_issues"]
+        csv_rows.append(
+            {
+                "full_name": r["full_name"],
+                "url": r["url"],
+                "stars": r["stars"],
+                "language": r["language"],
+                "created_at": r["created_at"].strftime("%Y-%m-%d"),
+                "updated_at": r["updated_at"].strftime("%Y-%m-%d"),
+                "age_days": (now - r["created_at"]).days,
+                "days_since_update": max(0, (now - r["updated_at"]).days),
+                "merged_prs": m["merged_prs"],
+                "releases": m["releases"],
+                "total_issues": total,
+                "closed_issues": closed,
+                "closed_issue_ratio": round(closed / total, 4) if total > 0 else 0.0,
+            }
+        )
+
+    output_path = Path(__file__).resolve().parent / "repos.csv"
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=list(csv_rows[0].keys()), delimiter=";")
+        writer.writeheader()
+        writer.writerows(csv_rows)
+
+    print(f"\n✅ {len(csv_rows)} repositórios exportados para: {output_path}")
 
 
 if __name__ == "__main__":
