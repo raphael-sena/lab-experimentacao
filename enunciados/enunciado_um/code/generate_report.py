@@ -277,6 +277,9 @@ def fmt_float2(v):
 def fmt_float4(v):
     return f"{v:.4f}".replace(".", ",")
 
+def fmt_pct1(v):
+  return f"{v:.1f}".replace(".", ",")
+
 # Build RQ07 table rows
 rq07_tex_rows = ""
 for r in rq07_rows:
@@ -293,12 +296,19 @@ for lang, cnt in lang_table_rows:
     pct = cnt / n_repos * 100
     lang_tex_rows += f"        {lang} & {cnt} & {pct:.1f}\\% \\\\\n"
 
+top3_langs = []
+for lang, cnt in lang_table_rows[:3]:
+  pct = cnt / n_repos * 100
+  top3_langs.append((lang, pct))
+top3_langs_str = ", ".join(
+  f"{lang} ({fmt_pct1(pct)}\\%)" for lang, pct in top3_langs
+)
+
 TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 
 % ── Encoding & Language ──────────────────────────────────────────────────────
 \usepackage[utf8]{{inputenc}}
 \usepackage[T1]{{fontenc}}
-\usepackage[brazil]{{babel}}
 
 % ── Layout ───────────────────────────────────────────────────────────────────
 \usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{{geometry}}
@@ -340,7 +350,7 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 \begin{{titlepage}}
   \centering
   \vspace*{{\fill}}
-  {{\LARGE \textbf{{Laboratório 01 -- Sprint 2}}\\[0.4em]
+  {{\LARGE \textbf{{Laboratório 01 -- Relatório Final (Lab01S03)}}\\[0.4em]
   \Large Características de Repositórios Populares do GitHub}}\\[2em]
   {{\large
     Raphael Brito\\[0.3em]
@@ -447,6 +457,38 @@ distribuições de métricas de software. Para variáveis categóricas (linguage
 realizamos contagem por categoria. Os gráficos foram gerados com
 \texttt{{matplotlib}} em Python.
 
+\subsection{{Visualização dos Dados}}
+
+As distribuições numéricas foram apresentadas por meio de histogramas
+(RQs 01, 02, 03, 04 e 06). Para as RQs 02 e 03, utilizamos escala logarítmica
+para reduzir o efeito de outliers. As análises por linguagem (RQ07) foram
+representadas com boxplots, comparando medianas e dispersões por categoria.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{{Resumo das Métricas}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+A Tabela~\ref{{tab:summary}} apresenta as medianas das métricas numéricas.
+Para a RQ05 (variável categórica), a contagem por linguagem está na
+Tabela~\ref{{tab:rq05}}.
+
+\begin{{table}}[H]
+  \centering
+  \caption{{Resumo das medianas das métricas (RQs 01, 02, 03, 04 e 06).}}
+  \label{{tab:summary}}
+  \begin{{tabular}}{{llr}}
+    \toprule
+    \textbf{{RQ}} & \textbf{{Métrica}} & \textbf{{Mediana}} \\
+    \midrule
+    RQ01 & Idade (anos) & {fmt_float2(med_age_y)} \\
+    RQ02 & PRs aceitas & {fmt_int(med_prs_v)} \\
+    RQ03 & Releases & {fmt_int(med_rel_v)} \\
+    RQ04 & Dias desde atualização & {fmt_int(med_upd_v)} \\
+    RQ06 & Razão issues fechadas & {fmt_float4(med_cr_v)} \\
+    \bottomrule
+  \end{{tabular}}
+\end{{table}}
+
 % ─────────────────────────────────────────────────────────────────────────────
 \section{{Questões de Pesquisa e Resultados}}
 % ─────────────────────────────────────────────────────────────────────────────
@@ -457,6 +499,9 @@ realizamos contagem por categoria. Os gráficos foram gerados com
 
 \textbf{{Métrica:}} idade do repositório em anos (calculada a partir de
 \texttt{{created\_at}}).
+
+\textbf{{Hipótese (H1):}} repositórios populares tendem a ser maduros,
+com 3--5 anos ou mais de existência.
 
 \begin{{figure}}[H]
   \centering
@@ -479,6 +524,9 @@ são, em geral, maduros. Há pouquíssimos repositórios populares com menos de
 
 \textbf{{Métrica:}} total de pull requests aceitas (\textit{{merged}}).
 
+\textbf{{Hipótese (H2):}} projetos populares atraem muitas contribuições
+externas e, portanto, apresentam alto volume de PRs aceitas.
+
 \begin{{figure}}[H]
   \centering
   \includegraphics[width=0.85\textwidth]{{figs/rq02_prs.pdf}}
@@ -492,7 +540,7 @@ poucas PRs, enquanto projetos de código com grandes comunidades (e.g.,
 \textit{{VSCode}}, \textit{{TensorFlow}}) chegam a dezenas de milhares.
 
 \textbf{{Discussão:}} a hipótese H2 é \textbf{{parcialmente confirmada}}.
-Embora a mediana seja razoável, a grande variância indica que o volume de
+Embora a mediana é razoável, a grande variância indica que o volume de
 contribuições externas depende fortemente do tipo de projeto.
 
 % ──────────────────────────────────────────────────
@@ -500,6 +548,9 @@ contribuições externas depende fortemente do tipo de projeto.
 % ──────────────────────────────────────────────────
 
 \textbf{{Métrica:}} total de releases publicadas.
+
+\textbf{{Hipótese (H3):}} repositórios populares lançam releases com
+regularidade, mas projetos de conteúdo podem reduzir a mediana.
 
 \begin{{figure}}[H]
   \centering
@@ -524,6 +575,9 @@ Projetos de software propriamente ditos tendem a ter muito mais releases.
 \textbf{{Métrica:}} número de dias desde a última atualização
 (\texttt{{days\_since\_update}}).
 
+\textbf{{Hipótese (H4):}} a maioria dos repositórios populares está atualizada
+recentemente (últimos 30--60 dias).
+
 \begin{{figure}}[H]
   \centering
   \includegraphics[width=0.85\textwidth]{{figs/rq04_update.pdf}}
@@ -545,6 +599,9 @@ Repositórios populares são quase todos ativos e atualizados recentemente.
 
 \textbf{{Métrica:}} linguagem primária de cada repositório.
 
+\textbf{{Hipótese (H5):}} linguagens populares na comunidade open-source
+(JavaScript/TypeScript, Python e Java) dominam os repositórios mais estrelados.
+
 \begin{{figure}}[H]
   \centering
   \includegraphics[width=0.85\textwidth]{{figs/rq05_langs.pdf}}
@@ -565,9 +622,9 @@ Repositórios populares são quase todos ativos e atualizados recentemente.
 \end{{table}}
 
 \textbf{{Resultado:}} as linguagens que mais aparecem são
-\textbf{{{lang_table_rows[0][0]}, {lang_table_rows[1][0]} e {lang_table_rows[2][0]}}},
-confirmando sua popularidade global. A categoria ``Unknown'' representa
-repositórios sem linguagem de código (documentação, listas, etc.).
+\textbf{{{top3_langs_str}}}, confirmando sua popularidade global.
+A categoria ``Unknown'' representa repositórios sem linguagem de código
+(documentação, listas, etc.).
 
 \textbf{{Discussão:}} a hipótese H5 foi \textbf{{confirmada}}.
 JavaScript/TypeScript e Python dominam o ecossistema open-source popular.
@@ -578,6 +635,9 @@ JavaScript/TypeScript e Python dominam o ecossistema open-source popular.
 
 \textbf{{Métrica:}} razão entre issues fechadas e total de issues
 ($\text{{ratio}} = \text{{closed}} / \text{{total}}$).
+
+\textbf{{Hipótese (H6):}} projetos populares têm alto percentual de issues
+fechadas (acima de 0,8), indicando manutenção ativa.
 
 \begin{{figure}}[H]
   \centering
@@ -600,6 +660,9 @@ equipes são responsivas no tratamento de issues.
 
 Esta questão de pesquisa bônus investiga se a linguagem primária do repositório
 influencia as métricas das RQs 02, 03 e 04.
+
+\textbf{{Hipótese (H7):}} linguagens mais populares tendem a receber mais
+contribuições, lançar mais releases e manter atualizações mais frequentes.
 
 \subsection{{RQ07a -- PRs aceitas por linguagem}}
 
@@ -684,4 +747,3 @@ A análise dos {n_repos} repositórios mais populares do GitHub revelou que:
 TEX_PATH.write_text(TEX, encoding="utf-8")
 print(f"\nLaTeX report written to: {TEX_PATH}")
 print("Done!")
-
