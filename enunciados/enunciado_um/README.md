@@ -18,6 +18,7 @@
   - [2. Coleta de dados (Sprint 2 – 1000 repositórios com paginação)](#2-coleta-de-dados-sprint-2--1000-repositórios-com-paginação)
   - [3. Geração do relatório (gráficos + LaTeX)](#3-geração-do-relatório-gráficos--latex)
 - [Compilação do Relatório LaTeX](#compilação-do-relatório-latex)
+- [Solução de Problemas LaTeX (MiKTeX)](#solução-de-problemas-latex-miktex)
 - [Questões de Pesquisa](#questões-de-pesquisa)
 - [Saídas Geradas](#saídas-geradas)
 
@@ -152,7 +153,7 @@ O script:
 
 ## Compilação do Relatório LaTeX
 
-Com o MiKTeX instalado e `pdflatex` disponível no PATH, execute a partir da pasta `docs/`:
+Com o MiKTeX instalado e `pdflatex` disponível no PATH, execute **a partir da pasta `docs/`**:
 
 ```powershell
 cd ..\docs
@@ -162,9 +163,44 @@ pdflatex relatorio.tex
 pdflatex relatorio.tex
 ```
 
+Se você estiver em `code/`, não rode `pdflatex relatorio.tex` direto (o arquivo está em `docs/`).
+
 O arquivo `relatorio.pdf` será gerado na mesma pasta.
 
-> **Dica:** se algum pacote LaTeX não estiver instalado, o MiKTeX solicitará instalação automática durante a primeira compilação. Aceite as instalações.
+> **Dica:** se algum pacote LaTeX não estiver instalado, o MiKTeX pode solicitar instalação automática durante a primeira compilação.
+
+---
+
+## Solução de Problemas LaTeX (MiKTeX)
+
+### 1) Erro: `I can't find file 'relatorio.tex'`
+
+Você está no diretório errado. Entre em `docs/` antes de compilar:
+
+```powershell
+cd ..\docs
+pdflatex relatorio.tex
+pdflatex relatorio.tex
+```
+
+### 2) Erros com arquivos auxiliares antigos (`.aux`, `.toc`, `.out`, `.log`)
+
+Limpe os arquivos auxiliares e compile novamente:
+
+```powershell
+Remove-Item .\relatorio.aux, .\relatorio.toc, .\relatorio.out, .\relatorio.log -ErrorAction SilentlyContinue
+pdflatex relatorio.tex
+pdflatex relatorio.tex
+```
+
+### 3) Erros do `babel` (`brazilian`, `brazil` ou `nil`)
+
+Em alguns ambientes MiKTeX, configurações globais podem causar falha de idioma do `babel`.
+Neste projeto, o `relatorio.tex` gerado por `generate_report.py` já está configurado para compilar sem `babel`, evitando esse problema específico.
+
+### 4) Aviso do MiKTeX sobre updates
+
+A mensagem `So far, you have not checked for updates as a MiKTeX user.` é um aviso de manutenção do MiKTeX e pode aparecer mesmo quando a compilação funciona.
 
 ---
 
