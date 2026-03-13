@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.6)  13 MAR 2026 15:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.3.6)  13 MAR 2026 15:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -60,6 +60,9 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 (C:\Users\Raphael\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg))
 (C:\Users\Raphael\AppData\Roaming\MiKTeX\tex/latex/setspace\setspace.sty
 Package: setspace 2022/12/04 v6.7b set line spacing
+)
+(C:\Program Files\MiKTeX\tex/latex/tools\indentfirst.sty
+Package: indentfirst 2023/07/02 v1.03 Indent first paragraph (DPC)
 )
 (C:\Program Files\MiKTeX\tex/latex/lm\lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
@@ -441,7 +444,7 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@widthR=\skip71
 \@temptokenb=\toks31
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 41
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 46
 .
 
 (C:\Program Files\MiKTeX\tex/latex/lm\t1lmr.fd
@@ -454,24 +457,24 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 (relatorio.aux)
 \openout1 = `relatorio.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 41.
-LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 46.
+LaTeX Font Info:    ... okay on input line 46.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -490,7 +493,7 @@ LaTeX Font Info:    ... okay on input line 41.
 * \oddsidemargin=13.08827pt
 * \evensidemargin=13.08827pt
 * \topmargin=-38.1381pt
-* \headheight=12.0pt
+* \headheight=14.0pt
 * \headsep=25.0pt
 * \topskip=12.0pt
 * \footskip=30.0pt
@@ -507,13 +510,13 @@ LaTeX Font Info:    ... okay on input line 41.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \microtypecontext on input line 41.
-Package microtype Info: Applying patch `item' on input line 41.
-Package microtype Info: Applying patch `toc' on input line 41.
-Package microtype Info: Applying patch `eqnum' on input line 41.
-Package microtype Info: Applying patch `footnote' on input line 41.
-Package microtype Info: Applying patch `verbatim' on input line 41.
-LaTeX Info: Redefining \microtypesetup on input line 41.
+LaTeX Info: Redefining \microtypecontext on input line 46.
+Package microtype Info: Applying patch `item' on input line 46.
+Package microtype Info: Applying patch `toc' on input line 46.
+Package microtype Info: Applying patch `eqnum' on input line 46.
+Package microtype Info: Applying patch `footnote' on input line 46.
+Package microtype Info: Applying patch `verbatim' on input line 46.
+LaTeX Info: Redefining \microtypesetup on input line 46.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -553,7 +556,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 41.
+Package hyperref Info: Link coloring OFF on input line 46.
  (relatorio.out)
 (relatorio.out)
 \@outlinefile=\write3
@@ -563,77 +566,68 @@ Package hyperref Info: Link coloring OFF on input line 41.
 
 {C:/Users/Raphael/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Program 
 Files/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}] (relatorio.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 2
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 4
 .
 
 (C:\Program Files\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 4
 .
 
 (C:\Program Files\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-2.
+4.
 
 (C:\Program Files\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-2.
+4.
 
 (C:\Program Files\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 2.
+(Font)              <12> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 2.
+(Font)              <8> on input line 4.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 2.
+(Font)              <6> on input line 4.
 )
 \tf@toc=\write4
 \openout4 = `relatorio.toc'.
 
+ [1]
+Overfull \hbox (1.56299pt too wide) in paragraph at lines 108--111
+[]\T1/lmr/m/n/12 (-20) Projetos pop-u-lares de-vem atrair \T1/lmr/bx/n/12 (-20)
+ muitas con-tribuições
+ []
 
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+Overfull \hbox (27.49924pt too wide) in paragraph at lines 124--127
+[]\T1/lmr/m/n/12 (-20) Acreditamos que lin-gua-gens como \T1/lmr/bx/n/12 (-20) 
+JavaScript/TypeScript,
+ []
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.61 \newpage
-              [1]
-Overfull \hbox (1.56299pt too wide) in paragraph at lines 89--92
-[]\T1/lmr/m/n/12 (-20) Projetos pop-u-lares de-vem atrair \T1/lmr/bx/n/12 (-20)
- muitas con-tribuições
- []
-
-
-Overfull \hbox (27.49924pt too wide) in paragraph at lines 105--108
-[]\T1/lmr/m/n/12 (-20) Acreditamos que lin-gua-gens como \T1/lmr/bx/n/12 (-20) 
-JavaScript/TypeScript,
- []
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[2]
+l.147 
+       [1]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
+51.
+ (C:\Program Files\MiKTeX\tex/latex/lm\ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 1
-29.
- (C:\Program Files\MiKTeX\tex/latex/lm\t1lmtt.fd
+70.
+
+(C:\Program Files\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -641,19 +635,19 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (33.06805pt too wide) in paragraph at lines 128--132
+Overfull \hbox (33.06805pt too wide) in paragraph at lines 169--173
 []\T1/lmr/bx/n/12 (-20) Busca pag-i-nada de repositórios: \T1/lmr/m/n/12 (-20) 
 uti-lizamos a busca por \T1/lmtt/m/n/12 stars:>0 sort:stars-desc
  []
 
 
-Overfull \hbox (6.3544pt too wide) in paragraph at lines 133--138
+Overfull \hbox (6.3544pt too wide) in paragraph at lines 174--179
 \T1/lmr/m/n/12 (-20) lotes de 4, o to-tal de PRs aceitas (\T1/lmtt/m/n/12 pullR
 equests(states: MERGED).totalCount\T1/lmr/m/n/12 (-20) ),
  []
 
 
-Overfull \hbox (10.69832pt too wide) in paragraph at lines 140--145
+Overfull \hbox (10.69832pt too wide) in paragraph at lines 181--186
 \T1/lmtt/m/n/12 full_name\T1/lmr/m/n/12 (-20) , \T1/lmtt/m/n/12 stars\T1/lmr/m/
 n/12 (-20) , \T1/lmtt/m/n/12 language\T1/lmr/m/n/12 (-20) , \T1/lmtt/m/n/12 cre
 ated_at\T1/lmr/m/n/12 (-20) , \T1/lmtt/m/n/12 updated_at\T1/lmr/m/n/12 (-20) , 
@@ -661,161 +655,90 @@ ated_at\T1/lmr/m/n/12 (-20) , \T1/lmtt/m/n/12 updated_at\T1/lmr/m/n/12 (-20) ,
 e\T1/lmr/m/n/12 (-20) ,
  []
 
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[3]
-<figs/rq01_age.pdf, id=128, 497.46101pt x 280.05379pt>
+[2{C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
+<figs/rq01_age.pdf, id=166, 497.46101pt x 280.05379pt>
 File: figs/rq01_age.pdf Graphic file (type pdf)
 <use figs/rq01_age.pdf>
-Package pdftex.def Info: figs/rq01_age.pdf  used on input line 202.
+Package pdftex.def Info: figs/rq01_age.pdf  used on input line 243.
 (pdftex.def)             Requested size: 374.86775pt x 211.04402pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[4 <./figs/rq01_age.pdf>]
-<figs/rq02_prs.pdf, id=195, 497.46101pt x 280.13281pt>
+ [3]
+<figs/rq02_prs.pdf, id=173, 497.46101pt x 280.13281pt>
 File: figs/rq02_prs.pdf Graphic file (type pdf)
 <use figs/rq02_prs.pdf>
-Package pdftex.def Info: figs/rq02_prs.pdf  used on input line 226.
+Package pdftex.def Info: figs/rq02_prs.pdf  used on input line 267.
 (pdftex.def)             Requested size: 374.86775pt x 211.10359pt.
-<figs/rq03_releases.pdf, id=196, 497.5206pt x 279.89694pt>
+ [4 <./figs/rq01_age.pdf>]
+<figs/rq03_releases.pdf, id=240, 497.5206pt x 279.89694pt>
 File: figs/rq03_releases.pdf Graphic file (type pdf)
 <use figs/rq03_releases.pdf>
-Package pdftex.def Info: figs/rq03_releases.pdf  used on input line 251.
+Package pdftex.def Info: figs/rq03_releases.pdf  used on input line 292.
 (pdftex.def)             Requested size: 374.86775pt x 210.9002pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[5 <./figs/rq02_prs.pdf>]
-<figs/rq04_update.pdf, id=271, 497.5802pt x 279.46973pt>
+ [5 <./figs/rq02_prs.pdf>]
+<figs/rq04_update.pdf, id=316, 497.5802pt x 279.46973pt>
 File: figs/rq04_update.pdf Graphic file (type pdf)
 <use figs/rq04_update.pdf>
-Package pdftex.def Info: figs/rq04_update.pdf  used on input line 277.
+Package pdftex.def Info: figs/rq04_update.pdf  used on input line 318.
 (pdftex.def)             Requested size: 374.86775pt x 210.55272pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[6 <./figs/rq03_releases.pdf>]
-Overfull \hbox (31.4231pt too wide) in paragraph at lines 296--298
+ [6 <./figs/rq03_releases.pdf>]
+Overfull \hbox (49.36421pt too wide) in paragraph at lines 337--339
 []\T1/lmr/bx/n/12 (-20) Hipótese (H5): \T1/lmr/m/n/12 (-20) lin-gua-gens pop-u-
 lares na co-mu-nidade open-source (JavaScript/TypeScript,
  []
 
-<figs/rq05_langs.pdf, id=342, 570.9186pt x 352.43292pt>
+<figs/rq05_langs.pdf, id=386, 570.9186pt x 352.43292pt>
 File: figs/rq05_langs.pdf Graphic file (type pdf)
 <use figs/rq05_langs.pdf>
-Package pdftex.def Info: figs/rq05_langs.pdf  used on input line 301.
+Package pdftex.def Info: figs/rq05_langs.pdf  used on input line 342.
 (pdftex.def)             Requested size: 374.86775pt x 231.4126pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[7 <./figs/rq04_update.pdf>]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[8 <./figs/rq05_langs.pdf>]
-<figs/rq06_issues.pdf, id=487, 497.5206pt x 279.89757pt>
+[7 <./figs/rq04_update.pdf>] [8 <./figs/rq05_langs.pdf>]
+<figs/rq06_issues.pdf, id=531, 497.5206pt x 279.89757pt>
 File: figs/rq06_issues.pdf Graphic file (type pdf)
 <use figs/rq06_issues.pdf>
-Package pdftex.def Info: figs/rq06_issues.pdf  used on input line 348.
+Package pdftex.def Info: figs/rq06_issues.pdf  used on input line 389.
 (pdftex.def)             Requested size: 374.86775pt x 210.90068pt.
-<figs/rq07a_prs_lang.pdf, id=488, 643.12396pt x 352.16756pt>
+<figs/rq07a_prs_lang.pdf, id=532, 643.12396pt x 352.16756pt>
 File: figs/rq07a_prs_lang.pdf Graphic file (type pdf)
 <use figs/rq07a_prs_lang.pdf>
-Package pdftex.def Info: figs/rq07a_prs_lang.pdf  used on input line 375.
+Package pdftex.def Info: figs/rq07a_prs_lang.pdf  used on input line 416.
 (pdftex.def)             Requested size: 374.86775pt x 205.2783pt.
-
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[9{C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKTe
-X/fonts/enc/dvips/lm/lm-mathit.enc} <./figs/rq06_issues.pdf>]
-<figs/rq07b_releases_lang.pdf, id=562, 643.12396pt x 352.16756pt>
+ [9{C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Program Files/MiKT
+eX/fonts/enc/dvips/lm/lm-mathit.enc} <./figs/rq06_issues.pdf>]
+<figs/rq07b_releases_lang.pdf, id=606, 643.12396pt x 352.16756pt>
 File: figs/rq07b_releases_lang.pdf Graphic file (type pdf)
 <use figs/rq07b_releases_lang.pdf>
-Package pdftex.def Info: figs/rq07b_releases_lang.pdf  used on input line 384.
+Package pdftex.def Info: figs/rq07b_releases_lang.pdf  used on input line 425.
 (pdftex.def)             Requested size: 374.86775pt x 205.2783pt.
-<figs/rq07c_update_lang.pdf, id=563, 643.12396pt x 351.73973pt>
+<figs/rq07c_update_lang.pdf, id=607, 643.12396pt x 351.73973pt>
 File: figs/rq07c_update_lang.pdf Graphic file (type pdf)
 <use figs/rq07c_update_lang.pdf>
-Package pdftex.def Info: figs/rq07c_update_lang.pdf  used on input line 393.
+Package pdftex.def Info: figs/rq07c_update_lang.pdf  used on input line 434.
 (pdftex.def)             Requested size: 374.86775pt x 205.02893pt.
+ [10 <./figs/rq07a_prs_lang.pdf> <./figs/rq07b_releases_lang.pdf>] [11 <./figs/
+rq07c_update_lang.pdf>]
+Overfull \hbox (11.42981pt too wide) in paragraph at lines 491--493
+\T1/lmr/m/n/12 (-20) Script (16,0%), JavaScript (11,5%) con-cen-tram uma fração
+ ex-pres-siva dos repositórios
+ []
 
+[12]
+Overfull \hbox (8.73317pt too wide) in paragraph at lines 547--559
+ [][] 
+ []
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[10 <./figs/rq07a_prs_lang.pdf> <./figs/rq07b_releases_lang.pdf>]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-34.
-
-(C:\Program Files\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[11 <./figs/rq07c_update_lang.pdf>]
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[12{C:/Program Files/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}] (relatorio.aux)
+[13] (relatorio.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `relatorio.out' has not changed.
-(rerunfilecheck)             Checksum: 84B8472E71407E3738D6A0B022BA74FC;4810.
+(rerunfilecheck)             Checksum: A5861E1E2A83B8FFE85C49DF9CA28A5C;6543.
  ) 
 Here is how much of TeX's memory you used:
- 14698 strings out of 467871
- 237375 string characters out of 5428438
- 691355 words of memory out of 5000000
- 43215 multiletter control sequences out of 15000+600000
- 684026 words of font info for 133 fonts, out of 8000000 for 9000
+ 14760 strings out of 467871
+ 238465 string characters out of 5428438
+ 694571 words of memory out of 5000000
+ 43239 multiletter control sequences out of 15000+600000
+ 685224 words of font info for 145 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,13n,79p,1008b,548s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Program Files/M
@@ -824,9 +747,9 @@ lic/lm/lmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/P
 rogram Files/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Program Files/MiKTeX/fo
 nts/type1/public/lm/lmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/lm/lmr
 i12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/lm/lmtt12.pfb>
-Output written on relatorio.pdf (13 pages, 452318 bytes).
+Output written on relatorio.pdf (15 pages, 463610 bytes).
 PDF statistics:
- 863 PDF objects out of 1000 (max. 8388607)
- 47 named destinations out of 1000 (max. 500000)
- 33478 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 913 PDF objects out of 1000 (max. 8388607)
+ 58 named destinations out of 1000 (max. 500000)
+ 33542 words of extra memory for PDF output out of 35830 (max. 10000000)
 

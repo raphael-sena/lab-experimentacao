@@ -1,19 +1,27 @@
-\contentsline {section}{\numberline {1}Introdução}{2}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Hipóteses Informais}{2}{subsection.1.1}%
-\contentsline {section}{\numberline {2}Metodologia}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Coleta de Dados}{3}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Análise}{3}{subsection.2.2}%
-\contentsline {subsection}{\numberline {2.3}Visualização dos Dados}{3}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Resumo das Métricas}{3}{section.3}%
-\contentsline {section}{\numberline {4}Questões de Pesquisa e Resultados}{4}{section.4}%
-\contentsline {subsection}{\numberline {4.1}RQ01 -- Sistemas populares são maduros/antigos?}{4}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}RQ02 -- Sistemas populares recebem muita contribuição externa?}{5}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}RQ03 -- Sistemas populares lançam releases com frequência?}{5}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}RQ04 -- Sistemas populares são atualizados com frequência?}{6}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}RQ05 -- Sistemas populares são escritos nas linguagens mais populares?}{7}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}RQ06 -- Sistemas populares possuem alto percentual de issues fechadas?}{9}{subsection.4.6}%
-\contentsline {section}{\numberline {5}RQ07 (Bônus) -- Linguagem e Contribuição Externa, Releases e Atualização}{9}{section.5}%
-\contentsline {subsection}{\numberline {5.1}RQ07a -- PRs aceitas por linguagem}{10}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}RQ07b -- Releases por linguagem}{10}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}RQ07c -- Tempo desde última atualização por linguagem}{11}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Conclusão}{11}{section.6}%
+\contentsline {section}{\numberline {1}Introdução}{1}{section.1}%
+\contentsline {section}{\numberline {2}Questões de Pesquisa e Hipóteses}{1}{section.2}%
+\contentsline {section}{\numberline {3}Objetivos}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Objetivo Geral}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Objetivos Específicos}{2}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Metodologia}{2}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Coleta de Dados}{2}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Análise}{3}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Visualização dos Dados}{3}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Resultados}{3}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Resultados por Questão de Pesquisa}{3}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}RQ01 -- Sistemas populares são maduros/antigos?}{3}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}RQ02 -- Sistemas populares recebem muita contribuição externa?}{4}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}RQ03 -- Sistemas populares lançam releases com frequência?}{5}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}RQ04 -- Sistemas populares são atualizados com frequência?}{6}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}RQ05 -- Sistemas populares são escritos nas linguagens mais populares?}{7}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}RQ06 -- Sistemas populares possuem alto percentual de issues fechadas?}{9}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}RQ07 (Bônus) -- Linguagem e Contribuição Externa, Releases e Atualização}{9}{subsection.5.8}%
+\contentsline {subsection}{\numberline {5.9}RQ07a -- PRs aceitas por linguagem}{10}{subsection.5.9}%
+\contentsline {subsection}{\numberline {5.10}RQ07b -- Releases por linguagem}{10}{subsection.5.10}%
+\contentsline {subsection}{\numberline {5.11}RQ07c -- Tempo desde última atualização por linguagem}{11}{subsection.5.11}%
+\contentsline {section}{\numberline {6}Discussão dos Resultados e Insights}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Insights Principais}{12}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Implicações para Projetos de Software}{12}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Conclusão, Tomadas de Decisão e Resposta às Hipóteses}{12}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Tomadas de Decisão}{13}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Respondendo às Hipóteses (H1--H7)}{13}{subsection.7.2}%

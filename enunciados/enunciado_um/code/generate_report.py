@@ -314,6 +314,9 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 \usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{{geometry}}
 \usepackage{{setspace}}
 \onehalfspacing
+\usepackage{{indentfirst}}
+\setlength{{\parindent}}{{1.25cm}}
+\setlength{{\parskip}}{{0pt}}
 
 % ── Fonts & Typography ───────────────────────────────────────────────────────
 \usepackage{{lmodern}}
@@ -333,6 +336,7 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 
 % ── Hyperlinks ───────────────────────────────────────────────────────────────
 \usepackage[hidelinks]{{hyperref}}
+\renewcommand{{\contentsname}}{{Sumário}}
 
 % ── Headers & Footers ────────────────────────────────────────────────────────
 \usepackage{{fancyhdr}}
@@ -341,6 +345,7 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 \fancyhead[L]{{\small Laboratório de Experimentação de Software}}
 \fancyhead[R]{{\small PUC Minas -- 2026/1}}
 \fancyfoot[C]{{\thepage}}
+\setlength{{\headheight}}{{14pt}}
 \renewcommand{{\headrulewidth}}{{0.4pt}}
 
 % ─────────────────────────────────────────────────────────────────────────────
@@ -349,22 +354,36 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 % ── Capa ─────────────────────────────────────────────────────────────────────
 \begin{{titlepage}}
   \centering
-  \vspace*{{\fill}}
-  {{\LARGE \textbf{{Laboratório 01 -- Relatório Final (Lab01S03)}}\\[0.4em]
-  \Large Características de Repositórios Populares do GitHub}}\\[2em]
+  \vspace*{{2.0cm}}
+
+  {{\normalsize
+    Pontifícia Universidade Católica de Minas Gerais (PUC~Minas)\\
+    Laboratório de Experimentação de Software -- 2026/1
+  }}
+
+  \vspace*{{2.8cm}}
+
   {{\large
     Raphael Brito\\[0.3em]
     Yan Cota
-  }}\\[2em]
-  {{\normalsize Pontifícia Universidade Católica de Minas Gerais (PUC~Minas)\\
-  Laboratório de Experimentação de Software -- 2026/1}}\\[1.5em]
-  {{\normalsize Belo Horizonte, {n_repos} repositórios analisados -- Março de 2026}}
-  \vspace*{{\fill}}
+  }}
+
+  \vspace*{{4.2cm}}
+
+  {{\LARGE \textbf{{Laboratório 01}}\\[0.5em]
+  \Large Características de Repositórios Populares do GitHub}}
+
+  \vfill
+
+  {{\normalsize Belo Horizonte\\ 2026}}
 \end{{titlepage}}
 
 % ── Sumário ──────────────────────────────────────────────────────────────────
+\pagenumbering{{roman}}
 \tableofcontents
 \newpage
+\pagenumbering{{arabic}}
+\setcounter{{page}}{{1}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{{Introdução}}
@@ -381,7 +400,7 @@ data de criação, data de última atualização, linguagem primária, número d
 \textit{{pull requests}} aceitas (merged), número de \textit{{releases}} e número de
 \textit{{issues}} abertas e fechadas.
 
-\subsection{{Hipóteses Informais}}
+\section{{Questões de Pesquisa e Hipóteses}}
 
 Antes de analisar os dados, levantamos as seguintes hipóteses informais:
 
@@ -421,6 +440,28 @@ Antes de analisar os dados, levantamos as seguintes hipóteses informais:
     (JavaScript, TypeScript, Python) recebam \textbf{{mais contribuição externa}},
     lancem mais releases e sejam atualizados com maior frequência.
 \end{{description}}
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{{Objetivos}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection{{Objetivo Geral}}
+
+Caracterizar os {n_repos} repositórios mais populares do GitHub por meio de
+métricas de produto e processo, avaliando maturidade, atividade, contribuição
+externa, uso de releases, linguagem predominante e manutenção de issues.
+
+\subsection{{Objetivos Específicos}}
+
+\begin{{itemize}}
+  \item Mensurar a idade dos repositórios e verificar evidências de maturidade.
+  \item Quantificar contribuição externa por PRs aceitas.
+  \item Avaliar a adoção de releases no ciclo de entrega.
+  \item Medir a recência de atualização dos projetos.
+  \item Identificar as linguagens mais frequentes entre os repositórios populares.
+  \item Estimar a razão de issues fechadas como indicador de manutenção.
+  \item Comparar PRs, releases e atualização entre linguagens (RQ07 bônus).
+\end{{itemize}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{{Metodologia}}
@@ -465,7 +506,7 @@ para reduzir o efeito de outliers. As análises por linguagem (RQ07) foram
 representadas com boxplots, comparando medianas e dispersões por categoria.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{{Resumo das Métricas}}
+\section{{Resultados}}
 % ─────────────────────────────────────────────────────────────────────────────
 
 A Tabela~\ref{{tab:summary}} apresenta as medianas das métricas numéricas.
@@ -490,7 +531,7 @@ Tabela~\ref{{tab:rq05}}.
 \end{{table}}
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{{Questões de Pesquisa e Resultados}}
+\subsection{{Resultados por Questão de Pesquisa}}
 % ─────────────────────────────────────────────────────────────────────────────
 
 % ──────────────────────────────────────────────────
@@ -655,7 +696,7 @@ A alta mediana indica que projetos populares são bem mantidos e que suas
 equipes são responsivas no tratamento de issues.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{{RQ07 (Bônus) -- Linguagem e Contribuição Externa, Releases e Atualização}}
+\subsection{{RQ07 (Bônus) -- Linguagem e Contribuição Externa, Releases e Atualização}}
 % ─────────────────────────────────────────────────────────────────────────────
 
 Esta questão de pesquisa bônus investiga se a linguagem primária do repositório
@@ -713,7 +754,44 @@ linguagens é menor, pois projetos de documentação também costumam ser
 atualizados com frequência.
 
 % ─────────────────────────────────────────────────────────────────────────────
-\section{{Conclusão}}
+\section{{Discussão dos Resultados e Insights}}
+% ─────────────────────────────────────────────────────────────────────────────
+
+\subsection{{Insights Principais}}
+
+\begin{{itemize}}
+  \item \textbf{{Maturidade e popularidade caminham juntas:}} a mediana de idade
+    ({fmt_float2(med_age_y)} anos) reforça que relevância em GitHub tende a ser
+    construída no longo prazo.
+
+  \item \textbf{{Atividade recente é decisiva:}} com mediana de {fmt_int(med_upd_v)}
+    dia(s) desde a última atualização, os projetos populares mostram alta
+    manutenção contínua.
+
+  \item \textbf{{Contribuição externa é heterogênea:}} a mediana de
+    {fmt_int(med_prs_v)} PRs aceitas convive com grande dispersão entre projetos
+    de software e repositórios de conteúdo.
+
+  \item \textbf{{Releases não são universais:}} apesar de projetos maduros,
+    a mediana de {fmt_int(med_rel_v)} releases indica presença relevante de
+    repositórios que não usam versionamento formal no GitHub.
+
+  \item \textbf{{Ecossistema concentrado em poucas linguagens:}} {top3_langs_str}
+    concentram uma fração expressiva dos repositórios analisados.
+
+  \item \textbf{{Manutenção de issues é elevada:}} razão mediana de
+    {fmt_float4(med_cr_v)} sugere boa responsividade na gestão de demandas.
+\end{{itemize}}
+
+\subsection{{Implicações para Projetos de Software}}
+
+Os resultados sugerem priorizar governança de contribuição (fluxo de PRs,
+revisão e integração), cadência de atualização contínua e transparência sobre
+estratégia de releases. Projetos que combinam esses fatores tendem a sustentar
+engajamento e visibilidade no longo prazo.
+
+% ─────────────────────────────────────────────────────────────────────────────
+\section{{Conclusão, Tomadas de Decisão e Resposta às Hipóteses}}
 % ─────────────────────────────────────────────────────────────────────────────
 
 A análise dos {n_repos} repositórios mais populares do GitHub revelou que:
@@ -739,6 +817,34 @@ A análise dos {n_repos} repositórios mais populares do GitHub revelou que:
   \item Linguagens de código tendem a apresentar mais contribuição externa e
     mais releases do que repositórios de documentação.
 \end{{itemize}}
+
+\subsection{{Tomadas de Decisão}}
+
+Com base nas evidências, recomendamos: (i) manter política explícita de
+triagem e fechamento de issues; (ii) publicar releases periódicas para projetos
+de software quando aplicável; (iii) documentar fluxo de contribuição para
+absorver PRs externas; e (iv) monitorar recência de atualização como indicador
+de saúde do projeto.
+
+\subsection{{Respondendo às Hipóteses (H1--H7)}}
+
+\begin{{table}}[H]
+  \centering
+  \caption{{Síntese de confirmação das hipóteses.}}
+  \label{{tab:hipoteses}}
+  \begin{{tabular}}{{lp{{8.5cm}}l}}
+    Hipótese & Descrição resumida & Status \\
+    \midrule
+    H1 & Repositórios populares tendem a ser maduros. & Confirmada \\
+    H2 & Projetos populares recebem muita contribuição externa. & Parcialmente confirmada \\
+    H3 & Projetos populares lançam releases com frequência. & Parcialmente confirmada \\
+    H4 & Projetos populares são atualizados com frequência. & Confirmada \\
+    H5 & Linguagens populares dominam repositórios populares. & Confirmada \\
+    H6 & Projetos populares têm alta razão de issues fechadas. & Confirmada \\
+    H7 & Linguagem influencia contribuição, releases e atualização. & Parcialmente confirmada \\
+    \bottomrule
+  \end{{tabular}}
+\end{{table}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \end{{document}}
