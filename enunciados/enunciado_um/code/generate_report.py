@@ -304,19 +304,21 @@ top3_langs_str = ", ".join(
   f"{lang} ({fmt_pct1(pct)}\\%)" for lang, pct in top3_langs
 )
 
-TEX = rf"""\documentclass[12pt,a4paper]{{article}}
+TEX = rf"""\documentclass[10pt,a4paper,twocolumn]{{article}}
 
 % ── Encoding & Language ──────────────────────────────────────────────────────
 \usepackage[utf8]{{inputenc}}
 \usepackage[T1]{{fontenc}}
 
 % ── Layout ───────────────────────────────────────────────────────────────────
-\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{{geometry}}
+\usepackage[top=2.3cm, bottom=2.3cm, left=2.0cm, right=2.0cm]{{geometry}}
 \usepackage{{setspace}}
-\onehalfspacing
+\setstretch{{1.08}}
 \usepackage{{indentfirst}}
 \setlength{{\parindent}}{{1.25cm}}
 \setlength{{\parskip}}{{0pt}}
+\setlength{{\columnsep}}{{0.7cm}}
+\setlength{{\emergencystretch}}{{3em}}
 
 % ── Fonts & Typography ───────────────────────────────────────────────────────
 \usepackage{{lmodern}}
@@ -330,12 +332,14 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 \usepackage{{float}}
 \usepackage{{array}}
 \usepackage{{xcolor}}
+\usepackage{{tabularx}}
+\usepackage{{dblfloatfix}}
 
 % ── Math ─────────────────────────────────────────────────────────────────────
 \usepackage{{amsmath}}
 
 % ── Hyperlinks ───────────────────────────────────────────────────────────────
-\usepackage[hidelinks]{{hyperref}}
+\usepackage[hidelinks,hypertexnames=false]{{hyperref}}
 \renewcommand{{\contentsname}}{{Sumário}}
 
 % ── Headers & Footers ────────────────────────────────────────────────────────
@@ -350,6 +354,8 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 
 % ─────────────────────────────────────────────────────────────────────────────
 \begin{{document}}
+
+\onecolumn
 
 % ── Capa ─────────────────────────────────────────────────────────────────────
 \begin{{titlepage}}
@@ -384,6 +390,7 @@ TEX = rf"""\documentclass[12pt,a4paper]{{article}}
 \newpage
 \pagenumbering{{arabic}}
 \setcounter{{page}}{{1}}
+{chr(92)}twocolumn
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{{Introdução}}
@@ -544,9 +551,9 @@ Tabela~\ref{{tab:rq05}}.
 \textbf{{Hipótese (H1):}} repositórios populares tendem a ser maduros,
 com 3--5 anos ou mais de existência.
 
-\begin{{figure}}[H]
+\begin{{figure}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq01_age.pdf}}
+  \includegraphics[width=\columnwidth]{{figs/rq01_age.pdf}}
   \caption{{Distribuição da idade dos 1.000 repositórios mais populares.}}
   \label{{fig:rq01}}
 \end{{figure}}
@@ -568,9 +575,9 @@ são, em geral, maduros. Há pouquíssimos repositórios populares com menos de
 \textbf{{Hipótese (H2):}} projetos populares atraem muitas contribuições
 externas e, portanto, apresentam alto volume de PRs aceitas.
 
-\begin{{figure}}[H]
+\begin{{figure}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq02_prs.pdf}}
+  \includegraphics[width=\columnwidth]{{figs/rq02_prs.pdf}}
   \caption{{Distribuição do número de PRs aceitas (escala log\textsubscript{{10}}).}}
   \label{{fig:rq02}}
 \end{{figure}}
@@ -593,9 +600,9 @@ contribuições externas depende fortemente do tipo de projeto.
 \textbf{{Hipótese (H3):}} repositórios populares lançam releases com
 regularidade, mas projetos de conteúdo podem reduzir a mediana.
 
-\begin{{figure}}[H]
+\begin{{figure}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq03_releases.pdf}}
+  \includegraphics[width=\columnwidth]{{figs/rq03_releases.pdf}}
   \caption{{Distribuição do número de releases (escala log\textsubscript{{10}}).}}
   \label{{fig:rq03}}
 \end{{figure}}
@@ -619,9 +626,9 @@ Projetos de software propriamente ditos tendem a ter muito mais releases.
 \textbf{{Hipótese (H4):}} a maioria dos repositórios populares está atualizada
 recentemente (últimos 30--60 dias).
 
-\begin{{figure}}[H]
+\begin{{figure}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq04_update.pdf}}
+  \includegraphics[width=\columnwidth]{{figs/rq04_update.pdf}}
   \caption{{Distribuição do tempo desde a última atualização (dias).}}
   \label{{fig:rq04}}
 \end{{figure}}
@@ -643,12 +650,12 @@ Repositórios populares são quase todos ativos e atualizados recentemente.
 \textbf{{Hipótese (H5):}} linguagens populares na comunidade open-source
 (JavaScript/TypeScript, Python e Java) dominam os repositórios mais estrelados.
 
-\begin{{figure}}[H]
+\begin{{figure*}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq05_langs.pdf}}
+  \includegraphics[width=0.92\textwidth]{{figs/rq05_langs.pdf}}
   \caption{{Top 10 linguagens primárias nos 1.000 repositórios mais populares.}}
   \label{{fig:rq05}}
-\end{{figure}}
+\end{{figure*}}
 
 \begin{{table}}[H]
   \centering
@@ -680,9 +687,9 @@ JavaScript/TypeScript e Python dominam o ecossistema open-source popular.
 \textbf{{Hipótese (H6):}} projetos populares têm alto percentual de issues
 fechadas (acima de 0,8), indicando manutenção ativa.
 
-\begin{{figure}}[H]
+\begin{{figure}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq06_issues.pdf}}
+  \includegraphics[width=\columnwidth]{{figs/rq06_issues.pdf}}
   \caption{{Distribuição da razão de issues fechadas.}}
   \label{{fig:rq06}}
 \end{{figure}}
@@ -707,32 +714,32 @@ contribuições, lançar mais releases e manter atualizações mais frequentes.
 
 \subsection{{RQ07a -- PRs aceitas por linguagem}}
 
-\begin{{figure}}[H]
+\begin{{figure*}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq07a_prs_lang.pdf}}
+  \includegraphics[width=0.92\textwidth]{{figs/rq07a_prs_lang.pdf}}
   \caption{{Distribuição de PRs aceitas por linguagem (escala log\textsubscript{{10}}).}}
   \label{{fig:rq07a}}
-\end{{figure}}
+\end{{figure*}}
 
 \subsection{{RQ07b -- Releases por linguagem}}
 
-\begin{{figure}}[H]
+\begin{{figure*}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq07b_releases_lang.pdf}}
+  \includegraphics[width=0.92\textwidth]{{figs/rq07b_releases_lang.pdf}}
   \caption{{Distribuição de releases por linguagem (escala log\textsubscript{{10}}).}}
   \label{{fig:rq07b}}
-\end{{figure}}
+\end{{figure*}}
 
 \subsection{{RQ07c -- Tempo desde última atualização por linguagem}}
 
-\begin{{figure}}[H]
+\begin{{figure*}}[t]
   \centering
-  \includegraphics[width=0.85\textwidth]{{figs/rq07c_update_lang.pdf}}
+  \includegraphics[width=0.92\textwidth]{{figs/rq07c_update_lang.pdf}}
   \caption{{Distribuição de dias desde última atualização por linguagem.}}
   \label{{fig:rq07c}}
-\end{{figure}}
+\end{{figure*}}
 
-\begin{{table}}[H]
+\begin{{table*}}[t]
   \centering
   \caption{{Medianas das métricas das RQs 02, 03 e 04 por linguagem (top 8).}}
   \label{{tab:rq07}}
@@ -743,7 +750,7 @@ contribuições, lançar mais releases e manter atualizações mais frequentes.
     \midrule
 {rq07_tex_rows}    \bottomrule
   \end{{tabular}}
-\end{{table}}
+\end{{table*}}
 
 \textbf{{Discussão:}} a hipótese H7 é \textbf{{parcialmente confirmada}}.
 Linguagens tipicamente usadas em projetos de software ativos (TypeScript,
@@ -790,6 +797,9 @@ revisão e integração), cadência de atualização contínua e transparência 
 estratégia de releases. Projetos que combinam esses fatores tendem a sustentar
 engajamento e visibilidade no longo prazo.
 
+\clearpage
+\onecolumn
+
 % ─────────────────────────────────────────────────────────────────────────────
 \section{{Conclusão, Tomadas de Decisão e Resposta às Hipóteses}}
 % ─────────────────────────────────────────────────────────────────────────────
@@ -832,7 +842,8 @@ de saúde do projeto.
   \centering
   \caption{{Síntese de confirmação das hipóteses.}}
   \label{{tab:hipoteses}}
-  \begin{{tabular}}{{lp{{8.5cm}}l}}
+  \small
+  \begin{{tabularx}}{{\textwidth}}{{lXl}}
     Hipótese & Descrição resumida & Status \\
     \midrule
     H1 & Repositórios populares tendem a ser maduros. & Confirmada \\
@@ -843,10 +854,11 @@ de saúde do projeto.
     H6 & Projetos populares têm alta razão de issues fechadas. & Confirmada \\
     H7 & Linguagem influencia contribuição, releases e atualização. & Parcialmente confirmada \\
     \bottomrule
-  \end{{tabular}}
+  \end{{tabularx}}
 \end{{table}}
 
 % ─────────────────────────────────────────────────────────────────────────────
+\clearpage
 \end{{document}}
 """
 
