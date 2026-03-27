@@ -34,3 +34,6 @@ docs/_build/
 
 # Jupyter Notebook specific files
 .ipynb_checkpoints
+
+# Lab2 generated output (cloned repos, CK jars, CSVs)
+lab2/code/output/

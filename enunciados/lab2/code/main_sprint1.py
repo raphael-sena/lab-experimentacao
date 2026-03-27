@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import os
 import shutil
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, fields
 from pathlib import Path
 from typing import Any
 
@@ -45,6 +46,14 @@ query($q: String!, $n: Int!, $cursor: String) {
 }
 """
 
+QUERY_REPO_RELEASES = """
+query($owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    releases { totalCount }
+  }
+}
+"""
+
 
 @dataclass
 class Repo:
@@ -55,6 +64,7 @@ class Repo:
     created_at: str
     updated_at: str
     default_branch: str
+    releases: int = 0
 
 
 
@@ -210,6 +220,95 @@ def run_ck_analysis(ck_jar_path: Path, repo_path: Path, output_path: Path) -> Pa
 
 
 
+def fetch_repo_releases(repo: Repo) -> int:
+    owner, name = repo.full_name.split("/", 1)
+    result = graphql_request(QUERY_REPO_RELEASES, {"owner": owner, "name": name})
+    return int(result["data"]["repository"]["releases"]["totalCount"])
+
+
+def save_repos_to_csv(repos: list[Repo], csv_path: Path) -> Path:
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
+    column_names = [f.name for f in fields(Repo)]
+    with csv_path.open("w", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=column_names)
+        writer.writeheader()
+        for repo in repos:
+            writer.writerow({f.name: getattr(repo, f.name) for f in fields(repo)})
+    print(f"[CSV] lista de repositórios salva em: {csv_path}")
+    return csv_path
+
+
+def summarize_ck_metrics(class_csv: Path, repo: Repo, summary_csv: Path) -> Path:
+    """Reads CK class.csv and appends an aggregated row to summary_csv."""
+    import statistics
+
+    cbo_values: list[float] = []
+    dit_values: list[float] = []
+    lcom_values: list[float] = []
+    loc_values: list[float] = []
+
+    with class_csv.open(newline="", encoding="utf-8", errors="replace") as fh:
+        reader = csv.DictReader(fh)
+        for row in reader:
+            try:
+                cbo_values.append(float(row.get("cbo", 0) or 0))
+                dit_values.append(float(row.get("dit", 0) or 0))
+                lcom_values.append(float(row.get("lcom", 0) or 0))
+                loc_values.append(float(row.get("loc", 0) or 0))
+            except ValueError:
+                continue
+
+    def _stats(values: list[float]) -> tuple[float, float, float]:
+        if not values:
+            return 0.0, 0.0, 0.0
+        median = statistics.median(values)
+        mean = statistics.mean(values)
+        std = statistics.pstdev(values)
+        return median, mean, std
+
+    cbo_med, cbo_mean, cbo_std = _stats(cbo_values)
+    dit_med, dit_mean, dit_std = _stats(dit_values)
+    lcom_med, lcom_mean, lcom_std = _stats(lcom_values)
+    loc_med, loc_mean, loc_std = _stats(loc_values)
+
+    fieldnames = [
+        "full_name", "stars", "releases", "created_at",
+        "cbo_median", "cbo_mean", "cbo_std",
+        "dit_median", "dit_mean", "dit_std",
+        "lcom_median", "lcom_mean", "lcom_std",
+        "loc_median", "loc_mean", "loc_std",
+        "num_classes",
+    ]
+
+    summary_csv.parent.mkdir(parents=True, exist_ok=True)
+    write_header = not summary_csv.exists()
+    with summary_csv.open("a", newline="", encoding="utf-8") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames)
+        if write_header:
+            writer.writeheader()
+        writer.writerow({
+            "full_name": repo.full_name,
+            "stars": repo.stars,
+            "releases": repo.releases,
+            "created_at": repo.created_at,
+            "cbo_median": round(cbo_med, 4),
+            "cbo_mean": round(cbo_mean, 4),
+            "cbo_std": round(cbo_std, 4),
+            "dit_median": round(dit_med, 4),
+            "dit_mean": round(dit_mean, 4),
+            "dit_std": round(dit_std, 4),
+            "lcom_median": round(lcom_med, 4),
+            "lcom_mean": round(lcom_mean, 4),
+            "lcom_std": round(lcom_std, 4),
+            "loc_median": round(loc_med, 4),
+            "loc_mean": round(loc_mean, 4),
+            "loc_std": round(loc_std, 4),
+            "num_classes": len(cbo_values),
+        })
+    print(f"[CSV] métricas CK sumarizadas em: {summary_csv}")
+    return summary_csv
+
+
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Lab02 Sprint 1: Top 1000 Java + clone + coleta CK de 1 repositório"
@@ -238,18 +337,29 @@ def main() -> None:
     target = max(1, min(args.target, 1000))
     repos = fetch_top_1000_java_repositories(target=target)
 
+    repos_csv = OUTPUT_DIR / "repos.csv"
+    save_repos_to_csv(repos, repos_csv)
+
     repo_index = max(1, min(args.repo_index, len(repos)))
     repo = repos[repo_index - 1]
     print(f"[info] repositório selecionado para coleta de métricas: #{repo_index} {repo.full_name}")
+
+    repo.releases = fetch_repo_releases(repo)
+    print(f"[info] releases: {repo.releases}")
 
     repo_path = clone_repository(repo, REPOS_DIR)
     ck_jar = ensure_ck_jar(CK_JAR_PATH)
 
     ck_output_for_repo = OUTPUT_DIR / "ck_metrics" / repo.full_name.replace("/", "__")
-    run_ck_analysis(ck_jar, repo_path, ck_output_for_repo)
+    class_csv = run_ck_analysis(ck_jar, repo_path, ck_output_for_repo)
+
+    summary_csv = OUTPUT_DIR / "ck_summary.csv"
+    summarize_ck_metrics(class_csv, repo, summary_csv)
 
     print("\nSPRINT 1 concluída com sucesso.")
-    print(f"- Saida do CK (1 repo): {ck_output_for_repo}")
+    print(f"- Lista de repositórios:  {repos_csv}")
+    print(f"- Saida do CK (1 repo):   {ck_output_for_repo}")
+    print(f"- Resumo de métricas CK:  {summary_csv}")
 
 
 if __name__ == "__main__":
