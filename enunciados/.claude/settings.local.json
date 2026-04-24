@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import ast, sys; src=open\\(''generate_report.py''\\).read\\(\\); ast.parse\\(src\\); print\\(''AST OK''\\)\")",
+      "Bash(python -c \"import ast; src=open\\(''generate_report.py'', encoding=''utf-8''\\).read\\(\\); ast.parse\\(src\\); print\\(''AST OK''\\)\")",
+      "Bash(python generate_report.py)",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/python generate_report.py)",
+      "Bash(python -m pip install scipy --quiet)",
+      "Bash(pdflatex --version)",
+      "Bash(lualatex --version)",
+      "Bash(pdflatex relatorio.tex)",
+      "Bash(python -c \"import ast; ast.parse\\(open\\(''run_ck_batch.py'', encoding=''utf-8''\\).read\\(\\)\\); print\\(''run_ck_batch.py OK''\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\(''generate_report.py'', encoding=''utf-8''\\).read\\(\\)\\); print\\(''generate_report.py OK''\\)\")"
+    ]
+  }
+}
