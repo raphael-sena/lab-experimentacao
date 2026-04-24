@@ -17,6 +17,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 
 SELECTED_REPOS_CSV = OUTPUT_DIR / "repos_selected.csv"
 PRS_DATASET_CSV = OUTPUT_DIR / "prs_sprint1.csv"
+FAILED_REPOS_CSV = OUTPUT_DIR / "failed_repos.csv"
 
 load_env_file(ENV_PATH)
 
@@ -122,6 +123,7 @@ def fetch_selected_repositories(target: int, min_prs: int) -> list[SelectedRepo]
         result = graphql_request(
             QUERY_REPOS_PAGE,
             {"q": search_query, "n": page_size, "cursor": cursor},
+            max_retries=1,
         )
 
         search = result["data"]["search"]
@@ -172,15 +174,19 @@ def fetch_repository_prs(
     dataset_rows: list[PullRequestRecord] = []
 
     while True:
-        result = graphql_request(
-            QUERY_PULL_REQUESTS_PAGE,
-            {
-                "owner": owner,
-                "name": name,
-                "n": page_size,
-                "cursor": cursor,
-            },
-        )
+        try:
+            result = graphql_request(
+                QUERY_PULL_REQUESTS_PAGE,
+                {
+                    "owner": owner,
+                    "name": name,
+                    "n": page_size,
+                    "cursor": cursor,
+                },
+                max_retries=1,
+            )
+        except Exception as ex:
+            raise RuntimeError(f"falha_na_coleta_prs: {ex}") from ex
 
         repository = result["data"].get("repository")
         if repository is None:
@@ -266,6 +272,28 @@ def save_selected_repos_csv(repos: list[SelectedRepo], path: Path) -> Path:
     return path
 
 
+def load_selected_repos_csv(path: Path) -> list[SelectedRepo]:
+    if not path.exists():
+        return []
+
+    repos: list[SelectedRepo] = []
+    with path.open("r", newline="", encoding="utf-8-sig") as fh:
+        reader = csv.DictReader(fh, delimiter=";")
+        for row in reader:
+            repos.append(
+                SelectedRepo(
+                    full_name=row["full_name"],
+                    url=row["url"],
+                    stars=int(row["stars"]),
+                    merged_prs=int(row["merged_prs"]),
+                    closed_prs=int(row["closed_prs"]),
+                    total_prs_merged_closed=int(row["total_prs_merged_closed"]),
+                )
+            )
+
+    return repos
+
+
 def save_pr_dataset_csv(rows: list[PullRequestRecord], path: Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     fieldnames = [
@@ -313,6 +341,110 @@ def save_pr_dataset_csv(rows: list[PullRequestRecord], path: Path) -> Path:
     return path
 
 
+def ensure_pr_dataset_header(path: Path) -> None:
+    if path.exists() and path.stat().st_size > 0:
+        return
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fieldnames = [
+        "repo_full_name",
+        "repo_url",
+        "pr_number",
+        "pr_url",
+        "final_status",
+        "created_at",
+        "ended_at",
+        "review_time_hours",
+        "review_count",
+        "changed_files",
+        "additions",
+        "deletions",
+        "description_char_count",
+        "participants_count",
+        "comments_count",
+    ]
+    with path.open("w", newline="", encoding="utf-8-sig") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames, delimiter=";")
+        writer.writeheader()
+
+
+def append_pr_dataset_rows(rows: list[PullRequestRecord], path: Path) -> int:
+    if not rows:
+        return 0
+
+    ensure_pr_dataset_header(path)
+    fieldnames = [
+        "repo_full_name",
+        "repo_url",
+        "pr_number",
+        "pr_url",
+        "final_status",
+        "created_at",
+        "ended_at",
+        "review_time_hours",
+        "review_count",
+        "changed_files",
+        "additions",
+        "deletions",
+        "description_char_count",
+        "participants_count",
+        "comments_count",
+    ]
+
+    with path.open("a", newline="", encoding="utf-8-sig") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fieldnames, delimiter=";")
+        for row in rows:
+            writer.writerow(
+                {
+                    "repo_full_name": row.repo_full_name,
+                    "repo_url": row.repo_url,
+                    "pr_number": row.pr_number,
+                    "pr_url": row.pr_url,
+                    "final_status": row.final_status,
+                    "created_at": row.created_at,
+                    "ended_at": row.ended_at,
+                    "review_time_hours": row.review_time_hours,
+                    "review_count": row.review_count,
+                    "changed_files": row.changed_files,
+                    "additions": row.additions,
+                    "deletions": row.deletions,
+                    "description_char_count": row.description_char_count,
+                    "participants_count": row.participants_count,
+                    "comments_count": row.comments_count,
+                }
+            )
+
+    return len(rows)
+
+
+def load_completed_repositories(path: Path) -> set[str]:
+    if not path.exists():
+        return set()
+
+    completed: set[str] = set()
+    with path.open("r", newline="", encoding="utf-8-sig") as fh:
+        reader = csv.DictReader(fh, delimiter=";")
+        for row in reader:
+            repo_full_name = (row.get("repo_full_name") or "").strip()
+            if repo_full_name:
+                completed.add(repo_full_name)
+    return completed
+
+
+def append_failed_repo(path: Path, repo_full_name: str, reason: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    write_header = not path.exists() or path.stat().st_size == 0
+    with path.open("a", newline="", encoding="utf-8-sig") as fh:
+        writer = csv.DictWriter(
+            fh,
+            fieldnames=["repo_full_name", "reason"],
+            delimiter=";",
+        )
+        if write_header:
+            writer.writeheader()
+        writer.writerow({"repo_full_name": repo_full_name, "reason": reason})
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Lab03 Sprint1: seleção de repositórios e coleta de métricas de PRs"
@@ -344,8 +476,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--sleep",
         type=float,
-        default=0.2,
-        help="Pausa (segundos) entre páginas de PR para reduzir pressão no rate limit.",
+        default=0.0,
+        help="Pausa (segundos) entre páginas de PR. Padrão 0 para coleta mais rápida.",
+    )
+    parser.add_argument(
+        "--refresh-repos",
+        action="store_true",
+        help="Força nova seleção de repositórios, ignorando repos_selected.csv.",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Retoma coleta a partir de prs_sprint1.csv, pulando repositórios já coletados.",
     )
     return parser.parse_args()
 
@@ -361,28 +503,68 @@ def main() -> None:
     max_prs_per_repo = max(0, args.max_prs_per_repo)
 
     print("[step] selecionando repositórios...")
-    repos = fetch_selected_repositories(target=target_repos, min_prs=min_prs)
-    save_selected_repos_csv(repos, SELECTED_REPOS_CSV)
+    if not args.refresh_repos and SELECTED_REPOS_CSV.exists():
+        repos = load_selected_repos_csv(SELECTED_REPOS_CSV)
+        if len(repos) >= target_repos:
+            repos = repos[:target_repos]
+            print(f"[info] reutilizando seleção existente: {SELECTED_REPOS_CSV}")
+        else:
+            repos = fetch_selected_repositories(target=target_repos, min_prs=min_prs)
+            save_selected_repos_csv(repos, SELECTED_REPOS_CSV)
+    else:
+        repos = fetch_selected_repositories(target=target_repos, min_prs=min_prs)
+        save_selected_repos_csv(repos, SELECTED_REPOS_CSV)
+
     print(f"[info] repositórios selecionados: {len(repos)}")
 
     print("[step] coletando PRs e métricas...")
-    all_rows: list[PullRequestRecord] = []
-    for idx, repo in enumerate(repos, start=1):
-        print(f"[prs] ({idx}/{len(repos)}) {repo.full_name}")
-        repo_rows = fetch_repository_prs(
-            repo,
-            page_size=pr_page_size,
-            max_prs_per_repo=max_prs_per_repo,
-            sleep_between_pages=max(0.0, args.sleep),
-        )
-        all_rows.extend(repo_rows)
+    completed_repos = load_completed_repositories(PRS_DATASET_CSV) if args.resume else set()
+    if args.resume and completed_repos:
+        print(f"[info] retomando coleta; repositórios já processados: {len(completed_repos)}")
 
-    save_pr_dataset_csv(all_rows, PRS_DATASET_CSV)
+    total_rows = 0
+    failed_repos = 0
+    for idx, repo in enumerate(repos, start=1):
+        if repo.full_name in completed_repos:
+            print(f"[prs] ({idx}/{len(repos)}) {repo.full_name} - pulado (já coletado)")
+            continue
+
+        print(f"[prs] ({idx}/{len(repos)}) {repo.full_name}")
+        try:
+            repo_rows = fetch_repository_prs(
+                repo,
+                page_size=pr_page_size,
+                max_prs_per_repo=max_prs_per_repo,
+                sleep_between_pages=max(0.0, args.sleep),
+            )
+        except Exception as ex:
+            failed_repos += 1
+            append_failed_repo(FAILED_REPOS_CSV, repo.full_name, str(ex))
+            print(f"[warn] erro em {repo.full_name}: {ex}")
+            print("[warn] pulando imediatamente para o próximo repositório.")
+            if args.resume:
+                completed_repos.add(repo.full_name)
+            continue
+
+        if not repo_rows:
+            failed_repos += 1
+            append_failed_repo(FAILED_REPOS_CSV, repo.full_name, "no_eligible_rows_or_partial_failure")
+
+        written = append_pr_dataset_rows(repo_rows, PRS_DATASET_CSV)
+        total_rows += written
+
+        if args.resume:
+            completed_repos.add(repo.full_name)
+
+    if not PRS_DATASET_CSV.exists():
+        save_pr_dataset_csv([], PRS_DATASET_CSV)
 
     print("\nSPRINT 1 concluída com sucesso.")
     print(f"- Repositórios selecionados: {SELECTED_REPOS_CSV}")
     print(f"- Dataset de PRs:            {PRS_DATASET_CSV}")
-    print(f"- PRs elegíveis coletados:   {len(all_rows)}")
+    print(f"- PRs elegíveis coletados:   {total_rows}")
+    print(f"- Repositórios com alerta:   {failed_repos}")
+    print(f"- Log de alertas:            {FAILED_REPOS_CSV}")
 
 
 if __name__ == "__main__":
