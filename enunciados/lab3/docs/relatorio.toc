@@ -1,0 +1,19 @@
+\contentsline {section}{\numberline {1}Introdução}{1}{section.2}%
+\contentsline {section}{\numberline {2}Questões de Pesquisa e Hipóteses}{1}{section.3}%
+\contentsline {section}{\numberline {3}Objetivos}{1}{section.4}%
+\contentsline {subsection}{\numberline {3.1}Objetivo Geral}{1}{subsection.5}%
+\contentsline {subsection}{\numberline {3.2}Objetivos Específicos}{1}{subsection.6}%
+\contentsline {section}{\numberline {4}Metodologia}{1}{section.7}%
+\contentsline {subsection}{\numberline {4.1}Coleta de Dados}{1}{subsection.8}%
+\contentsline {subsection}{\numberline {4.2}Análise}{1}{subsection.11}%
+\contentsline {paragraph}{RQ$_A$ -- Status do PR.}{1}{section*.12}%
+\contentsline {paragraph}{RQ$_B$ -- Número de revisões.}{1}{section*.13}%
+\contentsline {section}{\numberline {5}Resultados}{1}{section.14}%
+\contentsline {subsection}{\numberline {5.1}RQ$_A$ -- Relação entre características e status final}{2}{subsection.16}%
+\contentsline {subsection}{\numberline {5.2}RQ$_B$ -- Relação entre características e número de revisões}{2}{subsection.22}%
+\contentsline {section}{\numberline {6}Discussão dos Resultados}{3}{section.28}%
+\contentsline {subsection}{\numberline {6.1}Insights Principais}{3}{subsection.29}%
+\contentsline {subsection}{\numberline {6.2}Implicações para Equipes de Desenvolvimento}{4}{subsection.30}%
+\contentsline {section}{\numberline {7}Conclusão e Resposta às Hipóteses}{4}{section.31}%
+\contentsline {subsection}{\numberline {7.1}Tomadas de Decisão}{4}{subsection.32}%
+\contentsline {subsection}{\numberline {7.2}Respondendo às Hipóteses}{4}{subsection.33}%

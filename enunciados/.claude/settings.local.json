@@ -11,7 +11,8 @@
       "Bash(lualatex --version)",
       "Bash(pdflatex relatorio.tex)",
       "Bash(python -c \"import ast; ast.parse\\(open\\(''run_ck_batch.py'', encoding=''utf-8''\\).read\\(\\)\\); print\\(''run_ck_batch.py OK''\\)\")",
-      "Bash(python -c \"import ast; ast.parse\\(open\\(''generate_report.py'', encoding=''utf-8''\\).read\\(\\)\\); print\\(''generate_report.py OK''\\)\")"
+      "Bash(python -c \"import ast; ast.parse\\(open\\(''generate_report.py'', encoding=''utf-8''\\).read\\(\\)\\); print\\(''generate_report.py OK''\\)\")",
+      "Bash(pdflatex -interaction=nonstopmode relatorio.tex)"
     ]
   }
 }
