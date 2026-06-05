@@ -33,10 +33,10 @@ export function StatsTable({ rows }) {
     return <Card className="p-5 text-sm text-slate-500">Resultados estatísticos indisponíveis.</Card>
   }
   return (
-    <Card className="overflow-hidden">
+    <Card allowBreak className="overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full border-collapse text-sm">
-          <thead>
+          <thead className="print:table-header-group">
             <tr className="border-b border-slate-200 bg-slate-50/80 dark:border-slate-800 dark:bg-slate-800/50">
               {['Métrica', 'Teste', 'Mediana IA', 'Mediana Humano', 'p-valor', 'Tam. efeito', 'Significância'].map(
                 (h) => (
@@ -54,7 +54,7 @@ export function StatsTable({ rows }) {
             {rows.map((r, i) => (
               <tr
                 key={i}
-                className="border-b border-slate-100 last:border-0 hover:bg-slate-50 dark:border-slate-800/60 dark:hover:bg-slate-800/40"
+                className="border-b border-slate-100 last:border-0 hover:bg-slate-50 dark:border-slate-800/60 dark:hover:bg-slate-800/40 print:break-inside-avoid"
               >
                 <td className="px-4 py-2.5 font-medium text-slate-700 dark:text-slate-200">
                   {prettyMetric(r.metric)}

@@ -24,7 +24,7 @@ function MetricSelect({ value, onChange, options = COMPARISON_KEYS }) {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm outline-none focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+      className="no-print rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm outline-none focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
     >
       {options.map((k) => (
         <option key={k} value={k}>
@@ -56,12 +56,12 @@ export default function App() {
   const humanGroup = summary.groups.find((g) => g.name === 'humano_confirmado')?.count ?? 0
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-      <Header status={status} />
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 print:bg-white">
+      <Header status={status} onPrint={() => window.print()} />
 
-      <main className="mx-auto max-w-7xl space-y-12 px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl space-y-12 px-4 py-8 sm:px-6 lg:px-8 print:max-w-none print:space-y-6 print:px-0 print:py-2">
         {status === 'mock' && (
-          <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-200">
+          <div className="no-print rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-200">
             Não foi possível ler o CSV real ({error}). Exibindo <strong>dados mockados</strong> com a mesma
             estrutura, apenas para ilustrar o layout.
           </div>

@@ -1,11 +1,16 @@
 // Componentes de UI reutilizáveis estilizados com Tailwind CSS v4.
 
-export function Card({ className = '', children }) {
+export function Card({ className = '', children, allowBreak = false }) {
+  // Por padrão evitamos quebra interna (gráficos não devem ser cortados).
+  // Tabelas grandes passam `allowBreak` para fluir por várias páginas.
+  const breakCls = allowBreak ? '' : 'print:break-inside-avoid '
   return (
     <div
       className={
         'rounded-2xl border border-slate-200/70 bg-white shadow-sm ' +
         'dark:border-slate-800 dark:bg-slate-900 ' +
+        breakCls +
+        'print:border-slate-300 print:shadow-none ' +
         className
       }
     >
@@ -17,7 +22,8 @@ export function Card({ className = '', children }) {
 export function Section({ id, title, subtitle, children, action }) {
   return (
     <section id={id} className="scroll-mt-20">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
+      {/* mantém o título junto do primeiro bloco de conteúdo na impressão */}
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-2 print:break-after-avoid">
         <div>
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{title}</h2>
           {subtitle && (
@@ -76,7 +82,7 @@ export function Badge({ children, color = 'slate' }) {
 
 export function ChartFrame({ title, hint, children, height = 300 }) {
   return (
-    <Card className="p-5">
+    <Card className="p-5 print:break-inside-avoid">
       <div className="mb-1 flex items-baseline justify-between gap-2">
         <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200">{title}</h3>
       </div>

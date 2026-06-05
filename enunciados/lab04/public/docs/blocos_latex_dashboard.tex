@@ -1,0 +1,227 @@
+% =====================================================================
+%  BLOCOS LaTeX PARA INSERÇÃO NO ARTIGO (Lab04S03)
+%  Gerados a partir dos gráficos do dashboard (Sprints 1 e 2).
+%
+%  COMO USAR
+%  1. Exporte cada gráfico do dashboard como imagem (PNG/PDF) e salve na
+%     pasta de figuras do seu projeto LaTeX com o nome indicado em
+%     \includegraphics{...} de cada bloco abaixo.
+%  2. Copie os parágrafos + ambientes figure/table para a seção indicada.
+%  3. Os números foram apurados sobre o dataset real (N = 202.014 PRs;
+%     1.290 repositórios; G1 = IA autônoma, n = 9; G2 = humano, n = 202.005).
+%
+%  Requer no preâmbulo (já presentes no seu artigo): graphicx, booktabs,
+%  adjustbox, float.
+% =====================================================================
+
+
+% #####################################################################
+% ###  SEÇÃO 3 (METODOLOGIA) — CARACTERIZAÇÃO DO DATASET             ###
+% #####################################################################
+
+\subsection{Caracterização do Dataset}
+\label{sec:caracterizacao}
+
+O dataset de análise reúne 202.014 Pull Requests merged, distribuídos em
+1.290 repositórios populares, particionados em dois grupos: o Grupo IA (G1),
+com 9 PRs produzidos por agentes autônomos, e o Grupo Humano (G2), com
+202.005 PRs. Antes da inferência por questão de pesquisa, caracteriza-se a
+composição e a tendência central das variáveis de processo, de modo a
+contextualizar a forte assimetria amostral e a natureza enviesada das
+distribuições. Como as variáveis contínuas são acentuadamente assimétricas e
+de cauda longa, adota-se a \textbf{mediana} como medida de tendência central
+de referência, reportando-se a média e o intervalo interquartil (IQR) como
+apoio.
+
+% --------------------------------------------------------------------
+%  Figura: distribuição por linguagem
+% --------------------------------------------------------------------
+A Figura~\ref{fig:dash-linguagem} apresenta a distribuição dos PRs pelas três
+linguagens consideradas. O dataset é dominado por TypeScript, com 98.520 PRs
+(48,8\,\%), seguido de Python, com 65.868 PRs (32,6\,\%), e JavaScript, com
+37.626 PRs (18,6\,\%). Essa predominância de TypeScript em G2 é relevante
+porque contrasta com a composição de G1 --- majoritariamente Python (8 de 9
+PRs) ---, o que explica a única diferença estatisticamente robusta observada
+no estudo (distribuição de \texttt{language}; ver Seção~\ref{sec:results}) e
+reforça que tal diferença é um artefato de composição amostral, não um
+indicador de manutenibilidade.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.7\linewidth]{dashboard_dist_linguagem.png}
+\caption{Distribuição dos PRs por linguagem de programação no dataset
+completo (N = 202.014). TypeScript concentra 48,8\,\% das contribuições.}
+\label{fig:dash-linguagem}
+\end{figure}
+
+% --------------------------------------------------------------------
+%  Figura: distribuição por agente (fingerprint)
+% --------------------------------------------------------------------
+A Figura~\ref{fig:dash-agente} detalha a procedência das contribuições segundo
+o \textit{fingerprint} comportamental do agente de IA associado ao PR. Devin
+responde pela maior parcela, com 134.718 PRs (66,7\,\%), seguido de Claude
+Code, com 24.769 PRs (12,3\,\%), Cursor, com 3.696 PRs (1,8\,\%), e OpenAI
+Codex, com 7 PRs ($\approx$\,0,0\,\%); 38.824 PRs (19,2\,\%) não receberam
+atribuição de \textit{fingerprint}. Vale notar que essa identificação opera
+sobre todo o dataset --- inclusive sobre PRs de G2 ---, pois o
+\textit{fingerprint} sinaliza o ferramental de IA empregado em contribuições
+assistidas e confirmadas por humanos, e não apenas as contribuições
+plenamente autônomas de G1.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.8\linewidth]{dashboard_dist_agente.png}
+\caption{Distribuição dos PRs por agente de IA identificado via
+\textit{fingerprint} comportamental \cite{ghaleb:26}. Devin concentra
+66,7\,\% das contribuições atribuídas.}
+\label{fig:dash-agente}
+\end{figure}
+
+% --------------------------------------------------------------------
+%  Tabela: tendência central das métricas de processo
+% --------------------------------------------------------------------
+A Tabela~\ref{tab:dash-central} sumariza a tendência central das principais
+variáveis de processo no dataset completo. O contraste sistemático entre
+mediana e média evidencia a assimetria positiva das distribuições: em
+\texttt{diff\_lines}, por exemplo, a mediana de 71 linhas é muito inferior à
+média de 119, indicando uma cauda longa de PRs grandes. O tempo até o merge é
+tipicamente curto (mediana de 0,62 dia), porém com média de 4,34 dias puxada
+por \textit{outliers}. A baixa proporção de arquivos de teste (mediana 0;
+média 0,18) e a presença de revisão formal em 73,5\,\% dos PRs caracterizam o
+processo de contribuição predominante.
+
+\begin{table}[H]
+\centering
+\caption{Tendência central das métricas de processo (dataset completo,
+N = 202.014). IQR = intervalo interquartil [P25; P75].}
+\label{tab:dash-central}
+\begin{adjustbox}{max width=\textwidth}
+\small
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Métrica} & \textbf{Mediana} & \textbf{Média} & \textbf{IQR [P25; P75]} \\
+\midrule
+Linhas alteradas (\texttt{diff\_lines})      & 71   & 118,99 & [28; 172] \\
+Arquivos alterados (\texttt{changed\_files}) & 4    & 6,32   & [2; 7] \\
+Tempo até o merge (\texttt{days\_to\_merge}) & 0,62 & 4,34   & [0,05; 2,79] \\
+Commits por PR (\texttt{commit\_count})      & 3    & 3,70   & [1; 5] \\
+Revisões por PR (\texttt{review\_count})     & 1    & 2,32   & [0; 3] \\
+Prop. arq. de teste (\texttt{test\_file\_ratio}) & 0 & 0,18 & [0; 0,33] \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+% --------------------------------------------------------------------
+%  Figura: histograma de diff_lines
+% --------------------------------------------------------------------
+A Figura~\ref{fig:dash-diffhist} mostra o histograma de \texttt{diff\_lines}.
+A massa da distribuição concentra-se em PRs pequenos a médios --- a faixa de
+0--100 linhas reúne a maioria das contribuições ---, com decaimento acentuado
+e cauda longa à direita. Esse formato justifica metodologicamente o uso de
+testes não paramétricos (Mann-Whitney U) e da mediana como medida-síntese,
+em vez da média, sensível aos \textit{outliers}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.8\linewidth]{dashboard_hist_diff.png}
+\caption{Distribuição (histograma) do número de linhas alteradas por PR
+(\texttt{diff\_lines}). Eixo Y: nº de PRs; eixo X: faixas de linhas no diff.
+Forte assimetria positiva com cauda longa.}
+\label{fig:dash-diffhist}
+\end{figure}
+
+% --------------------------------------------------------------------
+%  Figura: histograma de days_to_merge
+% --------------------------------------------------------------------
+A Figura~\ref{fig:dash-dias} apresenta o histograma de \texttt{days\_to\_merge}.
+A grande maioria dos PRs é integrada em menos de um dia, refletindo um fluxo
+de revisão e merge ágil; ainda assim, observa-se uma cauda de PRs que
+permanecem abertos por semanas, responsável pela discrepância entre a mediana
+(0,62 dia) e a média (4,34 dias) reportadas na Tabela~\ref{tab:dash-central}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.8\linewidth]{dashboard_hist_dias.png}
+\caption{Distribuição (histograma) do tempo até o merge
+(\texttt{days\_to\_merge}). Eixo Y: nº de PRs; eixo X: faixas de dias.
+Predomínio de merges em menos de um dia.}
+\label{fig:dash-dias}
+\end{figure}
+
+% --------------------------------------------------------------------
+%  Figura: mediana de diff por linguagem (controle por subgrupo)
+% --------------------------------------------------------------------
+Por fim, a Figura~\ref{fig:dash-difflang} compara a mediana e a média de
+\texttt{diff\_lines} entre as três linguagens. As medianas são notavelmente
+homogêneas --- 70 linhas em TypeScript, 73 em Python e 69 em JavaScript ---,
+indicando que o tamanho típico das contribuições não varia de forma relevante
+entre as linguagens e que a linguagem, isoladamente, não constitui um fator de
+confusão para o tamanho dos PRs.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.8\linewidth]{dashboard_diff_por_linguagem.png}
+\caption{Mediana e média de \texttt{diff\_lines} por linguagem. As medianas
+($\approx$ 70 linhas) são homogêneas entre os subgrupos.}
+\label{fig:dash-difflang}
+\end{figure}
+
+
+% #####################################################################
+% ###  SEÇÃO 4 (RESULTADOS) — RQ1 e RQ2                              ###
+% #####################################################################
+
+% --------------------------------------------------------------------
+%  RQ01 — Complexidade Ciclomática (CCM)
+% --------------------------------------------------------------------
+A Figura~\ref{fig:dash-rq01} sintetiza a resposta à RQ01, exibindo, por meio
+de um \textit{box plot} com os pontos individuais sobrepostos, a distribuição
+da complexidade ciclomática média (\texttt{ccm\_mean}) por grupo (n = 3 em G1;
+n = 32 em G2). A mediana de G1 ($\approx$ 5,38) é substancialmente mais alta
+do que a de G2 ($\approx$ 1,25), com tamanho de efeito grande
+(Cliff's $\delta = 0{,}71$). Entretanto, o teste de Mann-Whitney U retornou
+$p$ bruto $= 0{,}043$ (limítrofe) e, sobretudo, a diferença \textbf{não
+sobrevive à correção para múltiplos testes} ($p_{\text{BH}} = 0{,}142$;
+$p_{\text{Bonf}} = 0{,}681$). Considerando o tamanho amostral mínimo de G1
+(n = 3), o resultado deve ser lido como indício exploratório, e não como
+evidência robusta de maior complexidade nas contribuições autônomas.
+\textbf{H0 não é rejeitada} ($\alpha = 0{,}05$).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.75\linewidth]{dashboard_rq01_ccm.png}
+\caption{RQ01 --- Distribuição da complexidade ciclomática média
+(\texttt{ccm\_mean}) por grupo (n = 3 G1; n = 32 G2). A linha central de cada
+caixa indica a mediana; pontos representam PRs individuais. G1 exibe mediana
+mais alta ($\approx$ 5,38) que G2 ($\approx$ 1,25), porém sem significância
+após correção.}
+\label{fig:dash-rq01}
+\end{figure}
+
+% --------------------------------------------------------------------
+%  RQ02 — Densidade de Code Smells / KLoC
+% --------------------------------------------------------------------
+A Figura~\ref{fig:dash-rq02} responde à RQ02, apresentando a distribuição da
+densidade de \textit{code smells} de design por KLoC (\texttt{design\_smell\_%
+density}) entre os grupos (n = 9 em G1; n = 50 em G2). Em ambos os grupos a
+\textbf{mediana é igual a zero}: a maioria dos PRs não acusa \textit{smells} de
+design. As poucas observações positivas --- uma em G1 ($\approx$ 5,52) e três
+em G2 ($\approx$ 3,61, 6,10 e 8,03) --- são \textit{outliers} que não alteram a
+tendência central. O teste de Mann-Whitney U não indicou diferença
+estatisticamente significativa ($p = 0{,}612$; Cliff's $\delta = 0{,}049$,
+negligível). \textbf{H0 não é rejeitada} ($\alpha = 0{,}05$). Ressalva
+metodológica: nesta execução, os detectores ESLint e Pylint não foram
+acionados; a densidade é uma \textit{proxy} obtida via Lizard (funções longas,
+NLOC $>$ 50, normalizadas por KLoC), o que não captura violações de convenção
+e de acoplamento.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=.75\linewidth]{dashboard_rq02_smells.png}
+\caption{RQ02 --- Distribuição da densidade de \textit{code smells} de design
+por KLoC (\texttt{design\_smell\_density}) por grupo (n = 9 G1; n = 50 G2).
+Mediana igual a zero em ambos os grupos; diferença não significativa
+($p = 0{,}612$; $\delta = 0{,}049$).}
+\label{fig:dash-rq02}
+\end{figure}

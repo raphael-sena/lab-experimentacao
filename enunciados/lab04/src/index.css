@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
+/* Dark mode baseado em classe (.dark). Como nunca adicionamos a classe, a
+   aplicação é sempre clara — garante um PDF consistente independentemente do
+   tema do sistema operacional. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,4 +19,41 @@ html {
 
 body {
   margin: 0;
+}
+
+/* ───────────────────────── Impressão / Exportação em PDF ─────────────────── */
+@media print {
+  /* Força a impressão de cores de fundo e dos preenchimentos dos gráficos. */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 12mm 10mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  /* Impede que os gráficos (SVG) estourem a largura da página, mantendo a
+     proporção. Cobre tanto o Recharts quanto o box plot customizado. */
+  .recharts-responsive-container,
+  .recharts-wrapper {
+    max-width: 100% !important;
+  }
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Oculta elementos sem sentido no papel (botões, selects, badges de status). */
+  .no-print {
+    display: none !important;
+  }
 }
