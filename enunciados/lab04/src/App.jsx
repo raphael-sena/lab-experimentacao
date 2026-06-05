@@ -4,6 +4,7 @@ import { useStats } from './hooks/useStats'
 import { COMPARISON_KEYS, GROUPS, NUMERIC_METRICS } from './lib/constants'
 import { formatInt, formatPercent, formatDecimal } from './lib/format'
 import { Header } from './components/Header'
+import { ResearchQuestions } from './components/rq/ResearchQuestions'
 import { CentralTendency } from './components/CentralTendency'
 import { SampleTable } from './components/SampleTable'
 import { StatsTable } from './components/StatsTable'
@@ -90,6 +91,9 @@ export default function App() {
         >
           <CentralTendency overall={summary.overall} />
         </Section>
+
+        {/* ---------- QUESTÕES DE PESQUISA (Sprint 2) ---------- */}
+        <ResearchQuestions stats={stats} />
 
         {/* ---------- DISTRIBUIÇÕES (subgrupos categóricos) ---------- */}
         <Section
