@@ -1,0 +1,48 @@
+stratum,metric,test,n_g1,n_g2,median_g1,median_g2,mean_g1,mean_g2,statistic,p_value,significant,p_adjusted_bh,significant_bh,p_adjusted_bonf,significant_bonf,effect_size,effect_label,note
+all,diff_lines,Mann-Whitney U,9,202005,35.0,71.0,121.0,118.9892,830791.5,0.654742,no,0.698391,no,1.0,no,-0.0861,negligible,
+all,changed_files,Mann-Whitney U,9,202005,2.0,4.0,2.6667,6.3212,559501.5,0.044222,yes,0.14151,no,0.707552,no,-0.3845,medium,borderline: p=0.0442 próximo de α=0.05 com razão amostral 202005/9=22445.0:1 — interpretar com cautela; MHT: não significativo após BH FDR (p_adj=0.1415); não significativo após Bonferroni (p_adj=0.7076)
+all,days_to_merge,Mann-Whitney U,9,202005,0.04,0.62,7.4667,4.3408,729781.5,0.305368,no,0.444172,no,1.0,no,-0.1972,small,
+all,test_file_ratio,Mann-Whitney U,9,202005,0.0,0.0,0.0,0.1824,515817.0,0.012859,yes,0.088917,no,0.205744,no,-0.4326,medium,MHT: não significativo após BH FDR (p_adj=0.0889); não significativo após Bonferroni (p_adj=0.2057)
+all,commit_count,Mann-Whitney U,9,202005,2.0,3.0,3.1111,3.6963,779182.5,0.449719,no,0.5535,no,1.0,no,-0.1428,negligible,
+all,review_count,Mann-Whitney U,9,202005,1.0,1.0,1.2222,2.319,769759.5,0.411297,no,0.548396,no,1.0,no,-0.1532,small,
+all,ccm_mean,Mann-Whitney U,3,32,5.375,1.25,6.875,2.3416,82.0,0.042593,yes,0.14151,no,0.681488,no,0.7083,large,borderline: p=0.0426 próximo de α=0.05 com razão amostral 32/3=10.7:1 — interpretar com cautela; MHT: não significativo após BH FDR (p_adj=0.1415); não significativo após Bonferroni (p_adj=0.6815)
+all,ccm_max,Mann-Whitney U,3,32,13.0,2.0,13.3333,3.7812,88.0,0.016672,yes,0.088917,no,0.266752,no,0.8333,large,MHT: não significativo após BH FDR (p_adj=0.0889); não significativo após Bonferroni (p_adj=0.2668)
+all,avg_func_length,Mann-Whitney U,3,32,26.0,10.75,25.8733,18.2166,77.5,0.087436,no,0.199854,no,1.0,no,0.6146,large,
+all,long_line_ratio,Mann-Whitney U,9,50,0.0,0.0,0.0018,0.0357,157.0,0.109667,no,0.219334,no,1.0,no,-0.3022,small,
+all,design_smell_density,Mann-Whitney U,9,50,0.0,0.0,0.6139,0.3548,236.0,0.611521,no,0.698391,no,1.0,no,0.0489,negligible,aprox: DSD via Lizard (funções longas NLOC>50 por KLoC); ESLint/Pylint não executados — violações de convenção/acoplamento não incluídas
+all,maintainability_index,Mann-Whitney U,3,32,49.55,61.4,50.7733,59.98,18.0,0.082114,no,0.199854,no,1.0,no,-0.625,large,aprox: MI calculado sem volume de Halstead (tokens não armazenados no B2; subestima ligeiramente o índice)
+all,has_review,Fisher's exact,9,202005,,,0.5556,0.7354,0.4496,0.256895,no,0.419795,no,1.0,no,,,
+all,is_revert,Fisher's exact,9,202005,,,0.0,0.0337,0.0,1.0,no,1.0,no,1.0,no,,,
+all,language,Chi-square,9,202005,,,,,13.0378,0.001475,yes,0.0236,yes,0.0236,yes,0.008,negligible,
+all,smell_type,Chi-square,9,50,,,,,3.9916,0.262372,no,0.419795,no,1.0,no,0.2601,small,
+Python,diff_lines,Mann-Whitney U,8,65860,65.0,73.0,133.625,120.0254,257826.0,0.916863,no,,,,,-0.0213,negligible,
+Python,changed_files,Mann-Whitney U,8,65860,2.0,4.0,2.75,6.0235,177152.5,0.105767,no,,,,,-0.3275,small,
+Python,days_to_merge,Mann-Whitney U,8,65860,0.035,0.74,8.0337,4.9416,179465.0,0.118289,no,,,,,-0.3188,small,
+Python,test_file_ratio,Mann-Whitney U,8,65860,0.0,0.1429,0.0,0.2354,118472.0,0.004634,yes,,,,,-0.5503,large,
+Python,commit_count,Mann-Whitney U,8,65860,2.0,3.0,3.25,4.1171,210973.0,0.322612,no,,,,,-0.1992,small,
+Python,review_count,Mann-Whitney U,8,65860,1.0,1.0,1.25,2.6142,214134.0,0.345772,no,,,,,-0.1872,small,
+Python,ccm_mean,Mann-Whitney U,3,28,5.375,1.268,6.875,2.5065,70.0,0.060003,no,,,,,0.6667,large,
+Python,ccm_max,Mann-Whitney U,3,28,13.0,2.5,13.3333,4.0714,76.0,0.021775,yes,,,,,0.8095,large,
+Python,avg_func_length,Mann-Whitney U,3,28,26.0,11.0,25.8733,14.6168,68.5,0.08229,no,,,,,0.631,large,
+Python,long_line_ratio,Mann-Whitney U,8,44,0.0,0.0,0.002,0.0366,123.0,0.138553,no,,,,,-0.3011,small,
+Python,design_smell_density,Mann-Whitney U,8,44,0.0,0.0,0.6906,0.2646,190.0,0.396877,no,,,,,0.0795,negligible,aprox: DSD via Lizard (funções longas NLOC>50 por KLoC); ESLint/Pylint não executados — violações de convenção/acoplamento não incluídas
+Python,maintainability_index,Mann-Whitney U,3,28,49.55,61.195,50.7733,59.95,17.0,0.101601,no,,,,,-0.5952,large,aprox: MI calculado sem volume de Halstead (tokens não armazenados no B2; subestima ligeiramente o índice)
+Python,has_review,Fisher's exact,8,65860,,,0.5,0.743,0.3459,0.216594,no,,,,,,,
+Python,is_revert,Fisher's exact,8,65860,,,0.0,0.0371,0.0,1.0,no,,,,,,,
+Python,smell_type,Chi-square,8,44,,,,,3.6045,0.307454,no,,,,,0.2633,small,
+sensitivity,diff_lines,Mann-Whitney U,9,202005,35.0,71.0,121.0,118.9892,830791.5,0.654742,no,,,,,-0.0861,negligible,
+sensitivity,changed_files,Mann-Whitney U,9,202005,2.0,4.0,2.6667,6.3212,559501.5,0.044222,yes,,,,,-0.3845,medium,borderline: p=0.0442 próximo de α=0.05 com razão amostral 202005/9=22445.0:1 — interpretar com cautela
+sensitivity,days_to_merge,Mann-Whitney U,9,202005,0.04,0.62,7.4667,4.3408,729781.5,0.305368,no,,,,,-0.1972,small,
+sensitivity,test_file_ratio,Mann-Whitney U,9,202005,0.0,0.0,0.0,0.1824,515817.0,0.012859,yes,,,,,-0.4326,medium,
+sensitivity,commit_count,Mann-Whitney U,9,202005,2.0,3.0,3.1111,3.6963,779182.5,0.449719,no,,,,,-0.1428,negligible,
+sensitivity,review_count,Mann-Whitney U,9,202005,1.0,1.0,1.2222,2.319,769759.5,0.411297,no,,,,,-0.1532,small,
+sensitivity,ccm_mean,Mann-Whitney U,3,32,5.375,1.25,6.875,2.3416,82.0,0.042593,yes,,,,,0.7083,large,borderline: p=0.0426 próximo de α=0.05 com razão amostral 32/3=10.7:1 — interpretar com cautela
+sensitivity,ccm_max,Mann-Whitney U,3,32,13.0,2.0,13.3333,3.7812,88.0,0.016672,yes,,,,,0.8333,large,
+sensitivity,avg_func_length,Mann-Whitney U,3,32,26.0,10.75,25.8733,18.2166,77.5,0.087436,no,,,,,0.6146,large,
+sensitivity,long_line_ratio,Mann-Whitney U,9,50,0.0,0.0,0.0018,0.0357,157.0,0.109667,no,,,,,-0.3022,small,
+sensitivity,design_smell_density,Mann-Whitney U,9,50,0.0,0.0,0.6139,0.3548,236.0,0.611521,no,,,,,0.0489,negligible,aprox: DSD via Lizard (funções longas NLOC>50 por KLoC); ESLint/Pylint não executados — violações de convenção/acoplamento não incluídas
+sensitivity,maintainability_index,Mann-Whitney U,3,32,49.55,61.4,50.7733,59.98,18.0,0.082114,no,,,,,-0.625,large,aprox: MI calculado sem volume de Halstead (tokens não armazenados no B2; subestima ligeiramente o índice)
+sensitivity,has_review,Fisher's exact,9,202005,,,0.5556,0.7354,0.4496,0.256895,no,,,,,,,
+sensitivity,is_revert,Fisher's exact,9,202005,,,0.0,0.0337,0.0,1.0,no,,,,,,,
+sensitivity,language,Chi-square,9,202005,,,,,13.0378,0.001475,yes,,,,,0.008,negligible,
+sensitivity,smell_type,Chi-square,9,50,,,,,3.9916,0.262372,no,,,,,0.2601,small,
