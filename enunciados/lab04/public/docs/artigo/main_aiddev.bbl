@@ -1,0 +1,64 @@
+\begin{thebibliography}{}
+
+\bibitem[Basili et~al. 1994]{basili:94}
+Basili, V., Caldiera, G., and Rombach, H.~D. (1994).
+\newblock The goal question metric approach.
+\newblock In {\em Encyclopedia of Software Engineering}. Wiley.
+
+\bibitem[Dakhel et~al. 2023]{dakhel:23}
+Dakhel, A.~M. et~al. (2023).
+\newblock {GitHub Copilot} {AI} pair programmer: Asset or liability?
+\newblock {\em Journal of Systems and Software}.
+
+\bibitem[Finnie-Ansley et~al. 2023]{finnie:23}
+Finnie-Ansley, J. et~al. (2023).
+\newblock It's weird that it knows what {I} want.
+\newblock {\em ACM TOCHI}.
+
+\bibitem[Ghaleb 2026]{ghaleb:26}
+Ghaleb, T.~A. (2026).
+\newblock Fingerprinting {AI} coding agents on {GitHub}.
+\newblock In {\em MSR '26}.
+
+\bibitem[Heitlager et~al. 2007]{heitlager:07}
+Heitlager, I., Kuipers, T., and Visser, J. (2007).
+\newblock A practical model for measuring maintainability.
+\newblock In {\em QUATIC}.
+
+\bibitem[Jimenez et~al. 2024]{jimenez:24}
+Jimenez, C.~E. et~al. (2024).
+\newblock {SWE-bench}: Can language models resolve real-world {GitHub} issues?
+\newblock In {\em ICLR}.
+
+\bibitem[Kalliamvakou et~al. 2014]{kalliamvakou:14}
+Kalliamvakou, E. et~al. (2014).
+\newblock The promises and perils of mining {GitHub}.
+\newblock In {\em ACM MSR}.
+
+\bibitem[Li et~al. 2025]{li:25}
+Li, H., Zhang, H., and Hassan, A.~E. (2025).
+\newblock The rise of {AI} teammates in software engineering ({SE}) 3.0.
+\newblock {\em arXiv:2507.15003}.
+
+\bibitem[McCabe 1976]{mccabe:76}
+McCabe, T.~J. (1976).
+\newblock A complexity measure.
+\newblock {\em IEEE Transactions on Software Engineering}.
+
+\bibitem[Mens et~al. 2026]{mens:26}
+Mens, T. et~al. (2026).
+\newblock Agentic much? adoption of coding agents on {GitHub}.
+\newblock In {\em MSR '26}.
+
+\bibitem[Palomba et~al. 2018]{palomba:18}
+Palomba, F. et~al. (2018).
+\newblock On the diffuseness and the impact on maintainability of code smells.
+\newblock {\em Empirical Software Engineering}.
+
+\bibitem[Vaithilingam et~al. 2022]{vaithilingam:22}
+Vaithilingam, P. et~al. (2022).
+\newblock Expectation vs. experience: Evaluating {AI} code assistants in
+  practice.
+\newblock In {\em ACM CHI}.
+
+\end{thebibliography}
