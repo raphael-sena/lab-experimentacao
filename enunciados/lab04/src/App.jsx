@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { useDataset } from './hooks/useDataset'
 import { useStats } from './hooks/useStats'
-import { COMPARISON_KEYS, GROUPS, NUMERIC_METRICS } from './lib/constants'
+import { GROUPS, NUMERIC_METRICS } from './lib/constants'
 import { formatInt, formatPercent, formatDecimal } from './lib/format'
 import { Header } from './components/Header'
 import { ResearchQuestions } from './components/rq/ResearchQuestions'
 import { CentralTendency } from './components/CentralTendency'
-import { SampleTable } from './components/SampleTable'
-import { StatsTable } from './components/StatsTable'
 import { Card, ChartFrame, KpiCard, Loader, Section } from './components/ui/primitives'
 import {
   AgentBar,
@@ -19,12 +17,14 @@ import {
 
 const metricLabel = (k) => NUMERIC_METRICS.find((m) => m.key === k)?.label || k
 
-function MetricSelect({ value, onChange, options = COMPARISON_KEYS }) {
+const COMPARISON_OPTIONS = NUMERIC_METRICS.filter((m) => m.key !== 'test_file_ratio').map((m) => m.key)
+
+function MetricSelect({ value, onChange, options = COMPARISON_OPTIONS }) {
   return (
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="no-print rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm outline-none focus:border-indigo-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+      className="no-print rounded border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 outline-none focus:border-slate-500"
     >
       {options.map((k) => (
         <option key={k} value={k}>
@@ -43,7 +43,7 @@ export default function App() {
 
   if (!summary) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen bg-slate-50">
         <Header status={status} />
         <Loader processed={processed} />
       </div>
@@ -56,12 +56,12 @@ export default function App() {
   const humanGroup = summary.groups.find((g) => g.name === 'humano_confirmado')?.count ?? 0
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 print:bg-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 print:bg-white">
       <Header status={status} onPrint={() => window.print()} />
 
-      <main className="mx-auto max-w-7xl space-y-12 px-4 py-8 sm:px-6 lg:px-8 print:max-w-none print:space-y-6 print:px-0 print:py-2">
+      <main className="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8 print:max-w-none print:space-y-5 print:px-0 print:py-2">
         {status === 'mock' && (
-          <div className="no-print rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-200">
+          <div className="no-print rounded border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-800">
             Não foi possível ler o CSV real ({error}). Exibindo <strong>dados mockados</strong> com a mesma
             estrutura, apenas para ilustrar o layout.
           </div>
@@ -72,15 +72,15 @@ export default function App() {
           title="Visão geral"
           subtitle="Totais e composição do dataset completo de pull requests analisados."
         >
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <KpiCard label="Total de PRs" value={formatInt(summary.totalPRs)} accent="indigo" icon="📦" />
-            <KpiCard label="Repositórios" value={formatInt(summary.totalRepositories)} accent="teal" icon="🗂️" />
-            <KpiCard label="Linguagens" value={formatInt(langCount)} sublabel={summary.languages.map((l) => l.name).join(' · ')} accent="amber" icon="💻" />
-            <KpiCard label="Agentes de IA" value={formatInt(agentCount)} sublabel="identificados por fingerprint" accent="violet" icon="🤖" />
-            <KpiCard label="PRs com revisão" value={formatPercent(summary.reviewRate)} accent="sky" icon="✅" />
-            <KpiCard label="PRs revertidos" value={formatPercent(summary.revertRate)} accent="rose" icon="↩️" />
-            <KpiCard label="Grupo IA autônoma" value={formatInt(iaGroup)} sublabel="PRs abertos por agentes" accent="indigo" icon="🧪" />
-            <KpiCard label="Grupo humano" value={formatInt(humanGroup)} sublabel="confirmados por humanos" accent="teal" icon="👤" />
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <KpiCard label="Total de PRs" value={formatInt(summary.totalPRs)} accent="indigo" />
+            <KpiCard label="Repositórios" value={formatInt(summary.totalRepositories)} accent="teal" />
+            <KpiCard label="Linguagens" value={formatInt(langCount)} sublabel={summary.languages.map((l) => l.name).join(' · ')} accent="amber" />
+            <KpiCard label="Agentes de IA" value={formatInt(agentCount)} sublabel="identificados por fingerprint" accent="violet" />
+            <KpiCard label="PRs com revisão" value={formatPercent(summary.reviewRate)} accent="sky" />
+            <KpiCard label="PRs revertidos" value={formatPercent(summary.revertRate)} accent="rose" />
+            <KpiCard label="Grupo IA autônoma" value={formatInt(iaGroup)} sublabel="PRs abertos por agentes" accent="indigo" />
+            <KpiCard label="Grupo humano" value={formatInt(humanGroup)} sublabel="confirmados por humanos" accent="teal" />
           </div>
         </Section>
 
@@ -92,7 +92,7 @@ export default function App() {
           <CentralTendency overall={summary.overall} />
         </Section>
 
-        {/* ---------- QUESTÕES DE PESQUISA (Sprint 2) ---------- */}
+        {/* ---------- QUESTÕES DE PESQUISA ---------- */}
         <ResearchQuestions stats={stats} />
 
         {/* ---------- DISTRIBUIÇÕES (subgrupos categóricos) ---------- */}
@@ -100,7 +100,7 @@ export default function App() {
           title="Composição por subgrupos"
           subtitle="Particionamento do dataset por linguagem de programação e por agente de IA."
         >
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             <ChartFrame title="PRs por linguagem" hint="Distribuição percentual no dataset completo">
               <LanguageDonut data={summary.languages} />
             </ChartFrame>
@@ -115,12 +115,12 @@ export default function App() {
           title="Forma das distribuições"
           subtitle="Histogramas mostram a concentração e a cauda longa das principais métricas contínuas."
         >
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
             <ChartFrame title="Distribuição de linhas alteradas (diff)" hint="Eixo Y: nº de PRs · Eixo X: faixas de linhas no diff">
-              <MetricHistogram bins={summary.histograms.diff_lines} color="#6366f1" />
+              <MetricHistogram bins={summary.histograms.diff_lines} color="#1d4ed8" />
             </ChartFrame>
             <ChartFrame title="Distribuição do tempo até o merge" hint="Eixo Y: nº de PRs · Eixo X: faixas de dias até o merge">
-              <MetricHistogram bins={summary.histograms.days_to_merge} color="#14b8a6" />
+              <MetricHistogram bins={summary.histograms.days_to_merge} color="#374151" />
             </ChartFrame>
           </div>
         </Section>
@@ -129,7 +129,7 @@ export default function App() {
         <Section
           title="Comparação entre linguagens"
           subtitle="Mediana e média de uma métrica selecionada, comparando cada subgrupo de linguagem."
-          action={<MetricSelect value={langMetric} onChange={setLangMetric} options={NUMERIC_METRICS.map((m) => m.key)} />}
+          action={<MetricSelect value={langMetric} onChange={setLangMetric} />}
         >
           <ChartFrame
             title={`Mediana de "${metricLabel(langMetric)}" por linguagem`}
@@ -144,29 +144,29 @@ export default function App() {
         <Section
           title="Comparação entre grupos do estudo"
           subtitle="IA autônoma vs. humano confirmado. Os tamanhos amostrais são muito distintos — interprete com cautela."
-          action={<MetricSelect value={groupMetric} onChange={setGroupMetric} options={NUMERIC_METRICS.map((m) => m.key)} />}
+          action={<MetricSelect value={groupMetric} onChange={setGroupMetric} />}
         >
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <Card className="p-5 lg:col-span-2">
-              <h3 className="mb-3 text-sm font-semibold text-slate-800 dark:text-slate-200">
+          <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+            <Card className="p-4 lg:col-span-2">
+              <h3 className="mb-2 text-sm font-semibold text-slate-800">
                 Mediana de "{metricLabel(groupMetric)}" por grupo
               </h3>
-              <div style={{ height: 300 }}>
+              <div style={{ height: 280 }}>
                 <GroupComparison byGroup={summary.byGroup} metricKey={groupMetric} />
               </div>
             </Card>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {Object.values(GROUPS).map((g) => {
                 const scope = summary.byGroup[g.key]
                 if (!scope) return null
                 return (
-                  <Card key={g.key} className="p-5">
+                  <Card key={g.key} className="p-4">
                     <div className="flex items-center gap-2">
-                      <span className="h-3 w-3 rounded-full" style={{ background: g.color }} />
-                      <h4 className="font-semibold text-slate-800 dark:text-slate-200">{g.label}</h4>
+                      <span className="h-2.5 w-2.5 rounded-sm" style={{ background: g.color }} />
+                      <h4 className="text-sm font-semibold text-slate-800">{g.label}</h4>
                     </div>
                     <p className="mt-0.5 text-xs text-slate-500">{g.description}</p>
-                    <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                    <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
                       <div>
                         <p className="text-xs text-slate-400">Nº de PRs</p>
                         <p className="font-bold tabular-nums">{formatInt(scope.count)}</p>
@@ -184,25 +184,9 @@ export default function App() {
             </div>
           </div>
         </Section>
-
-        {/* ---------- TESTES ESTATÍSTICOS (bônus) ---------- */}
-        <Section
-          title="Onde os subgrupos diferem (bônus)"
-          subtitle="Resultados dos testes estatísticos comparando os dois grupos no dataset completo."
-        >
-          <StatsTable rows={stats} />
-        </Section>
-
-        {/* ---------- AMOSTRA DOS DADOS ---------- */}
-        <Section
-          title="Amostra dos dados brutos"
-          subtitle="Primeiras linhas do CSV, para inspeção da estrutura dos registros."
-        >
-          <SampleTable rows={summary.sample} />
-        </Section>
       </main>
 
-      <footer className="border-t border-slate-200/70 py-6 text-center text-xs text-slate-400 dark:border-slate-800">
+      <footer className="border-t border-slate-200 py-5 text-center text-xs text-slate-400">
         Laboratório de Experimentação de Software · Lab04 — Visualização de dados · React + Tailwind CSS + Recharts
       </footer>
     </div>
