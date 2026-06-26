@@ -1,0 +1,101 @@
+======================================================================
+                  STATISTICAL HYPOTHESIS TESTING REPORT
+                  GraphQL vs REST API Controlled Experiment
+======================================================================
+Date: 2026-06-25 23:18:40
+Total successful trials: 487 (REST: 243, GraphQL: 244)
+Significance level (alpha): 0.05
+======================================================================
+
+RESOURCE ENDPOINT: 'COMMITS'
+----------------------------------------
+RQ1: Response Time (Latency) Analysis
+  - REST Latency (ms):    Mean=484.59, Median=621.08, Std=265.42
+  - GraphQL Latency (ms): Mean=481.81, Median=634.97, Std=414.31
+  - Normality Test (Shapiro-Wilk): REST p-value=0.0000 (Non-Normal), GraphQL p-value=0.0000 (Non-Normal)
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - Test Statistic:       1655.0000
+  - p-value:              0.1168
+  - Effect Size:          Cliff's Delta = -0.125 (Negligible)
+  - Decision:             FAIL TO REJECT NULL HYPOTHESIS (H0,1: GraphQL Latency >= REST Latency).
+    Conclusion: There is no statistically significant evidence that GraphQL is faster than REST.
+
+RQ2: Response Payload Size (Bytes) Analysis
+  - REST Payload Size (Bytes):    Mean=125455.79, Median=126535.00
+  - GraphQL Payload Size (Bytes): Mean=19531.84, Median=33199.00
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - p-value:              1.147e-22
+  - Effect Size:          Cliff's Delta = -1.000 (Large)
+  - Decision:             REJECT NULL HYPOTHESIS (H0,2: GraphQL Payload Size >= REST Payload Size).
+    Conclusion: GraphQL payload size is significantly SMALLER than REST payload size (84.4% reduction).
+----------------------------------------
+
+RESOURCE ENDPOINT: 'ISSUES'
+----------------------------------------
+RQ1: Response Time (Latency) Analysis
+  - REST Latency (ms):    Mean=524.44, Median=746.86, Std=342.63
+  - GraphQL Latency (ms): Mean=478.81, Median=626.94, Std=278.81
+  - Normality Test (Shapiro-Wilk): REST p-value=0.0000 (Non-Normal), GraphQL p-value=0.0000 (Non-Normal)
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - Test Statistic:       1351.0000
+  - p-value:              0.006559
+  - Effect Size:          Cliff's Delta = -0.262 (Small)
+  - Decision:             REJECT NULL HYPOTHESIS (H0,1: GraphQL Latency >= REST Latency).
+    Conclusion: GraphQL responses are significantly FASTER than REST responses for this endpoint.
+
+RQ2: Response Payload Size (Bytes) Analysis
+  - REST Payload Size (Bytes):    Mean=115150.80, Median=115690.00
+  - GraphQL Payload Size (Bytes): Mean=3971.79, Median=5022.00
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - p-value:              2.713e-22
+  - Effect Size:          Cliff's Delta = -1.000 (Large)
+  - Decision:             REJECT NULL HYPOTHESIS (H0,2: GraphQL Payload Size >= REST Payload Size).
+    Conclusion: GraphQL payload size is significantly SMALLER than REST payload size (96.6% reduction).
+----------------------------------------
+
+RESOURCE ENDPOINT: 'PULLS'
+----------------------------------------
+RQ1: Response Time (Latency) Analysis
+  - REST Latency (ms):    Mean=609.11, Median=853.62, Std=418.30
+  - GraphQL Latency (ms): Mean=431.80, Median=581.67, Std=283.71
+  - Normality Test (Shapiro-Wilk): REST p-value=0.0000 (Non-Normal), GraphQL p-value=0.0000 (Non-Normal)
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - Test Statistic:       1085.0000
+  - p-value:              5.68e-05
+  - Effect Size:          Cliff's Delta = -0.407 (Medium)
+  - Decision:             REJECT NULL HYPOTHESIS (H0,1: GraphQL Latency >= REST Latency).
+    Conclusion: GraphQL responses are significantly FASTER than REST responses for this endpoint.
+
+RQ2: Response Payload Size (Bytes) Analysis
+  - REST Payload Size (Bytes):    Mean=327019.77, Median=529050.00
+  - GraphQL Payload Size (Bytes): Mean=3709.93, Median=3777.50
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - p-value:              2.712e-22
+  - Effect Size:          Cliff's Delta = -1.000 (Large)
+  - Decision:             REJECT NULL HYPOTHESIS (H0,2: GraphQL Payload Size >= REST Payload Size).
+    Conclusion: GraphQL payload size is significantly SMALLER than REST payload size (98.9% reduction).
+----------------------------------------
+
+RESOURCE ENDPOINT: 'REPO'
+----------------------------------------
+RQ1: Response Time (Latency) Analysis
+  - REST Latency (ms):    Mean=435.36, Median=595.03, Std=299.15
+  - GraphQL Latency (ms): Mean=393.99, Median=503.22, Std=263.28
+  - Normality Test (Shapiro-Wilk): REST p-value=0.0000 (Non-Normal), GraphQL p-value=0.0000 (Non-Normal)
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - Test Statistic:       1745.0000
+  - p-value:              0.2788
+  - Effect Size:          Cliff's Delta = -0.062 (Negligible)
+  - Decision:             FAIL TO REJECT NULL HYPOTHESIS (H0,1: GraphQL Latency >= REST Latency).
+    Conclusion: There is no statistically significant evidence that GraphQL is faster than REST.
+
+RQ2: Response Payload Size (Bytes) Analysis
+  - REST Payload Size (Bytes):    Mean=6757.85, Median=6890.50
+  - GraphQL Payload Size (Bytes): Mean=280.03, Median=249.00
+  - Statistical Test:     Mann-Whitney U-Test (One-Sided, GraphQL < REST)
+  - p-value:              1.765e-22
+  - Effect Size:          Cliff's Delta = -1.000 (Large)
+  - Decision:             REJECT NULL HYPOTHESIS (H0,2: GraphQL Payload Size >= REST Payload Size).
+    Conclusion: GraphQL payload size is significantly SMALLER than REST payload size (95.9% reduction).
+----------------------------------------
+
