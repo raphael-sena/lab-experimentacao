@@ -1,0 +1,162 @@
+{
+    "commits": {
+        "GraphQL": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 170.05833333333337,
+                "median": 160.815,
+                "std": 66.37904520218729,
+                "min": 84.01,
+                "max": 485.3
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 5409.1,
+                "median": 5414.5,
+                "std": 87.33658632179774,
+                "min": 5229.0,
+                "max": 5631.0,
+                "total_transferred": 162273.0
+            }
+        },
+        "REST": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 251.34200000000004,
+                "median": 199.9,
+                "std": 173.60231730933896,
+                "min": 106.77,
+                "max": 842.56
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 124304.63333333333,
+                "median": 124370.0,
+                "std": 833.0692517197592,
+                "min": 122619.0,
+                "max": 125745.0,
+                "total_transferred": 3729139.0
+            }
+        }
+    },
+    "repo": {
+        "GraphQL": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 151.09633333333335,
+                "median": 150.41,
+                "std": 25.798179497830827,
+                "min": 110.86,
+                "max": 201.86
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 313.1333333333333,
+                "median": 314.0,
+                "std": 4.336956928803748,
+                "min": 304.0,
+                "max": 321.0,
+                "total_transferred": 9394.0
+            }
+        },
+        "REST": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 172.45200000000003,
+                "median": 132.09,
+                "std": 141.39683794932955,
+                "min": 91.02,
+                "max": 704.04
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 6440.7,
+                "median": 6452.0,
+                "std": 163.41361737880837,
+                "min": 6078.0,
+                "max": 6706.0,
+                "total_transferred": 193221.0
+            }
+        }
+    },
+    "issues": {
+        "GraphQL": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 251.80433333333332,
+                "median": 157.32999999999998,
+                "std": 218.697428956764,
+                "min": 91.44,
+                "max": 768.22
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 2886.5666666666666,
+                "median": 2880.0,
+                "std": 66.62488058258474,
+                "min": 2742.0,
+                "max": 3029.0,
+                "total_transferred": 86597.0
+            }
+        },
+        "REST": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 197.886,
+                "median": 181.135,
+                "std": 106.94697614980147,
+                "min": 114.66,
+                "max": 736.3
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 96206.6,
+                "median": 96290.5,
+                "std": 526.882804478541,
+                "min": 94697.0,
+                "max": 97285.0,
+                "total_transferred": 2886198.0
+            }
+        }
+    },
+    "pulls": {
+        "GraphQL": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 178.13933333333333,
+                "median": 154.88,
+                "std": 125.78441636204475,
+                "min": 108.96,
+                "max": 834.45
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 2981.866666666667,
+                "median": 2976.5,
+                "std": 65.68300747731006,
+                "min": 2861.0,
+                "max": 3117.0,
+                "total_transferred": 89456.0
+            }
+        },
+        "REST": {
+            "latency_ms": {
+                "count": 30,
+                "mean": 209.5556666666667,
+                "median": 193.75,
+                "std": 114.48179137503388,
+                "min": 127.05,
+                "max": 794.09
+            },
+            "size_bytes": {
+                "count": 30,
+                "mean": 118255.2,
+                "median": 118437.5,
+                "std": 998.3418804922628,
+                "min": 115586.0,
+                "max": 119673.0,
+                "total_transferred": 3547656.0
+            }
+        }
+    }
+}
